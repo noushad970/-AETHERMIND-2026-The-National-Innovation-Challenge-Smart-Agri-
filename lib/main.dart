@@ -9,10 +9,12 @@ import 'core/routes/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'data/services/crops_realtime_service.dart';
 import 'data/services/crop_daily_suggestion_service.dart';
+import 'data/services/chat_realtime_service.dart';
 import 'data/repositories/daily_suggestion_repository.dart';
 import 'data/services/notification_service.dart';
 import 'firebase_options.dart';
 import 'features/auth/presentation/providers/auth_provider.dart';
+import 'features/chatbot/presentation/providers/chatbot_provider.dart';
 import 'features/crop_tracker/data/crop_summary_provider.dart';
 import 'features/crop_tracker/presentation/providers/crops_provider.dart';
 import 'features/crop_tracker/presentation/providers/daily_suggestions_provider.dart';
@@ -103,6 +105,7 @@ class AgriApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => CropsRealtimeService()),
         ChangeNotifierProvider(create: (_) => CropDailySuggestionService()),
+        ChangeNotifierProvider(create: (_) => ChatRealtimeService()),
         ChangeNotifierProxyProvider<AuthProvider, CropsProvider>(
           create: (ctx) =>
               CropsProvider(realtime: ctx.read<CropsRealtimeService>()),
@@ -133,6 +136,12 @@ class AgriApp extends StatelessWidget {
               ),
         ),
         ChangeNotifierProvider(create: (_) => DiseaseDetectionProvider()),
+        ChangeNotifierProxyProvider<AuthProvider, ChatbotProvider>(
+          create: (ctx) =>
+              ChatbotProvider(chat: ctx.read<ChatRealtimeService>()),
+          update: (ctx, _, prev) =>
+              prev ?? ChatbotProvider(chat: ctx.read<ChatRealtimeService>()),
+        ),
         ChangeNotifierProvider(create: (_) => WeatherProvider()),
         ChangeNotifierProxyProvider<AuthProvider, WeatherDailyAdviceProvider>(
           create: (ctx) =>
