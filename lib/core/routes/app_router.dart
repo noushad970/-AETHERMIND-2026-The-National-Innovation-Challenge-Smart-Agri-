@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../layout/app_navigation.dart';
+import '../layout/desktop_page_frame.dart';
 import '../widgets/auth_gate.dart';
 
 import '../../features/ai_chatbot/presentation/screens/chatbot_screen.dart';
@@ -38,57 +40,56 @@ import '../../features/weather/presentation/screens/weather_screen.dart';
 import '../../features/yield_forecaster/presentation/screens/yield_forecaster_screen.dart';
 import 'app_routes.dart';
 
-
-
-
-/// Generates [MaterialPageRoute]s for all named routes in [AppRoutes].
+/// Generates [AppPageRoute]s for all named routes in [AppRoutes].
 class AppRouter {
   AppRouter._();
 
   static Route<dynamic>? generate(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutes.splash:
-        return MaterialPageRoute(builder: (_) => const SplashScreen());
+        return _page(settings, (_) => const SplashScreen());
       case AppRoutes.onboarding:
-        return MaterialPageRoute(builder: (_) => const OnboardingScreen());
+        return _page(settings, (_) => const OnboardingScreen());
       case AppRoutes.appTutorial:
-        return MaterialPageRoute(builder: (_) => const AppTutorialScreen());
+        return _page(settings, (_) => const AppTutorialScreen());
       case AppRoutes.login:
       case AppRoutes.register:
-        return MaterialPageRoute(builder: (_) => const LoginScreen());
+        return _page(settings, (_) => const LoginScreen());
 
       case AppRoutes.home:
-        return MaterialPageRoute(builder: (_) => const HomeScreen());
+        return _page(settings, (_) => const HomeScreen());
 
       // Crop tracker
       case AppRoutes.cropList:
-        return MaterialPageRoute(builder: (_) => const CropListScreen());
+        return _page(settings, (_) => const CropListScreen());
       case AppRoutes.addCrop:
-        return MaterialPageRoute(builder: (_) => const AddCropScreen());
+        return _page(settings, (_) => const AddCropScreen());
       case AppRoutes.cropDetail:
         final cropId = settings.arguments as String;
-        return MaterialPageRoute(
-          builder: (_) => CropDetailScreen(cropId: cropId),
+        return _page(
+          settings,
+          (_) => CropDetailScreen(cropId: cropId),
         );
       case AppRoutes.cropLiveTrack:
         final cropId = settings.arguments as String;
-        return MaterialPageRoute(
-          builder: (_) => CropLiveTrackScreen(cropId: cropId),
+        return _page(
+          settings,
+          (_) => CropLiveTrackScreen(cropId: cropId),
         );
       case AppRoutes.cropLibrary:
-        return MaterialPageRoute(builder: (_) => const CropLibraryScreen());
-
+        return _page(settings, (_) => const CropLibraryScreen());
 
       // AI Disease
       case AppRoutes.diseaseDetect:
-        return MaterialPageRoute(builder: (_) => const DiseaseDetectScreen());
+        return _page(settings, (_) => const DiseaseDetectScreen());
       case AppRoutes.diseaseResult:
-        return MaterialPageRoute(builder: (_) => const DiseaseResultScreen());
+        return _page(settings, (_) => const DiseaseResultScreen());
 
       // AI Chatbot
       case AppRoutes.chatbot:
-        return MaterialPageRoute(
-          builder: (_) => const AuthGate(
+        return _page(
+          settings,
+          (_) => const AuthGate(
             featureName: 'AI chat and saved conversation history',
             child: ChatbotScreen(),
           ),
@@ -96,84 +97,94 @@ class AppRouter {
 
       // Weather
       case AppRoutes.weatherScreen:
-        return MaterialPageRoute(builder: (_) => const WeatherScreen());
+        return _page(settings, (_) => const WeatherScreen());
 
       // Market prices
       case AppRoutes.marketPrices:
-        return MaterialPageRoute(builder: (_) => const MarketPricesScreen());
+        return _page(settings, (_) => const MarketPricesScreen());
 
       // Farm records
       case AppRoutes.farmRecords:
-        return MaterialPageRoute(builder: (_) => const FarmRecordsScreen());
+        return _page(settings, (_) => const FarmRecordsScreen());
       case AppRoutes.expenseList:
-        return MaterialPageRoute(builder: (_) => const ExpenseListScreen());
+        return _page(settings, (_) => const ExpenseListScreen());
       case AppRoutes.addExpense:
-        return MaterialPageRoute(builder: (_) => const AddExpenseScreen());
+        return _page(settings, (_) => const AddExpenseScreen());
 
       // Notifications
       case AppRoutes.notifications:
-        return MaterialPageRoute(builder: (_) => const NotificationsScreen());
+        return _page(settings, (_) => const NotificationsScreen());
 
       // Livestock / poultry
       case AppRoutes.livestockList:
-        return MaterialPageRoute(builder: (_) => const LivestockListScreen());
+        return _page(settings, (_) => const LivestockListScreen());
       case AppRoutes.addLivestock:
-        return MaterialPageRoute(builder: (_) => const AddLivestockScreen());
+        return _page(settings, (_) => const AddLivestockScreen());
       case AppRoutes.livestockDetail:
         final animalId = settings.arguments as String;
-        return MaterialPageRoute(
-          builder: (_) => LivestockDetailScreen(animalId: animalId),
+        return _page(
+          settings,
+          (_) => LivestockDetailScreen(animalId: animalId),
         );
       case AppRoutes.livestockLiveTrack:
         final animalId = settings.arguments as String;
-        return MaterialPageRoute(
-          builder: (_) => LivestockLiveTrackScreen(animalId: animalId),
+        return _page(
+          settings,
+          (_) => LivestockLiveTrackScreen(animalId: animalId),
         );
 
       // Fish & Aquaculture (মৎস্য চাষ)
       case AppRoutes.fishList:
-        return MaterialPageRoute(builder: (_) => const FishListScreen());
+        return _page(settings, (_) => const FishListScreen());
       case AppRoutes.addFish:
-        return MaterialPageRoute(builder: (_) => const AddFishScreen());
+        return _page(settings, (_) => const AddFishScreen());
       case AppRoutes.fishDetail:
         final pondId = settings.arguments as String;
-        return MaterialPageRoute(
-          builder: (_) => FishDetailScreen(pondId: pondId),
+        return _page(
+          settings,
+          (_) => FishDetailScreen(pondId: pondId),
         );
       case AppRoutes.fishLiveTrack:
         final pondId = settings.arguments as String;
-        return MaterialPageRoute(
-          builder: (_) => FishLiveTrackScreen(pondId: pondId),
+        return _page(
+          settings,
+          (_) => FishLiveTrackScreen(pondId: pondId),
         );
 
       // Settings
       case AppRoutes.settings:
-        return MaterialPageRoute(builder: (_) => const SettingsScreen());
+        return _page(settings, (_) => const SettingsScreen());
 
       // Krishi Helpline
       case AppRoutes.krishiHelpline:
-        return MaterialPageRoute(builder: (_) => const KrishiHelplineScreen());
+        return _page(settings, (_) => const KrishiHelplineScreen());
 
       // Crop Yield & Revenue Forecaster
       case AppRoutes.yieldForecaster:
-        return MaterialPageRoute(builder: (_) => const YieldForecasterScreen());
+        return _page(settings, (_) => const YieldForecasterScreen());
 
       // Smart Irrigation
       case AppRoutes.smartIrrigation:
-        return MaterialPageRoute(builder: (_) => const SoilIrrigationScreen());
+        return _page(settings, (_) => const SoilIrrigationScreen());
 
       // Community Agri Feed
       case AppRoutes.communityFeed:
-        return MaterialPageRoute(builder: (_) => const CommunityFeedScreen());
+        return _page(settings, (_) => const CommunityFeedScreen());
 
       default:
         return _unknownRoute(settings.name);
-
-
-
-
     }
   }
+
+  /// Builds a named page, framed for desktop windows.
+  static Route<dynamic> _page(RouteSettings settings, WidgetBuilder builder) =>
+      AppPageRoute(
+        routeName: settings.name,
+        builder: (context) => DesktopPageFrame(
+          style: DesktopPageStyle.forRoute(settings.name),
+          child: builder(context),
+        ),
+      );
 
   static Route<dynamic> _unknownRoute(String? name) => MaterialPageRoute(
     builder: (_) =>

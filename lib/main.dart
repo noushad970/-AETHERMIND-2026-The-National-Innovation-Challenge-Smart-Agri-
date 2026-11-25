@@ -7,6 +7,9 @@ import 'package:timezone/data/latest_all.dart' as tz_data;
 
 import 'core/config/env.dart';
 import 'core/constants/app_strings.dart';
+import 'core/layout/app_desktop_shell.dart';
+import 'core/layout/app_navigation.dart';
+import 'core/layout/app_scroll_behavior.dart';
 import 'core/routes/app_routes.dart';
 import 'core/routes/app_router.dart';
 import 'core/theme/app_theme.dart';
@@ -288,6 +291,9 @@ class AgriApp extends StatelessWidget {
             theme: AppTheme.lightTheme(),
             darkTheme: AppTheme.darkTheme(),
             themeMode: themeProv.themeMode,
+            navigatorKey: AppNavigation.navigatorKey,
+            navigatorObservers: [AppNavigation.routeTracker],
+            scrollBehavior: const AppScrollBehavior(),
             initialRoute: AppRoutes.splash,
             onGenerateRoute: AppRouter.generate,
             builder: (context, child) {
@@ -342,7 +348,9 @@ class AgriApp extends StatelessWidget {
                   ],
                 );
               }
-              return NetworkStatusOverlay(child: currentChild);
+              return NetworkStatusOverlay(
+                child: AppDesktopShell(child: currentChild),
+              );
             },
           );
         },
