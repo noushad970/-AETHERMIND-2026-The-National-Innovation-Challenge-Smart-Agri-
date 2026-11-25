@@ -40,6 +40,7 @@ import 'core/providers/locale_provider.dart';
 import 'core/providers/theme_provider.dart';
 import 'features/weather/presentation/providers/weather_daily_advice_provider.dart';
 import 'features/weather/presentation/providers/weather_provider.dart';
+import 'features/notifications/presentation/providers/notification_provider.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -176,6 +177,7 @@ class AgriApp extends StatelessWidget {
               WeatherDailyAdviceProvider(weather: ctx.read<WeatherProvider>()),
           update: (_, _, prev) => prev ?? WeatherDailyAdviceProvider(),
         ),
+        ChangeNotifierProvider(create: (_) => NotificationProvider()..loadLocalNotifications()),
 
         ChangeNotifierProxyProvider<
           AuthProvider,
