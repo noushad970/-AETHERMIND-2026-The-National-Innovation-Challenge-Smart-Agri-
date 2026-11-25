@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants/app_strings.dart';
+import '../routes/app_routes.dart';
 import '../theme/app_theme.dart';
 import 'header_action_bar.dart';
 
@@ -10,6 +11,7 @@ class BuildPreviewScreen extends StatelessWidget {
   const BuildPreviewScreen({super.key});
 
   static const List<(String, String)> _routes = [
+    ('login', AppRoutes.login),
   ];
 
   @override
