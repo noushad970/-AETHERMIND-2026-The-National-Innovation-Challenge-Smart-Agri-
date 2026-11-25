@@ -22,6 +22,8 @@ class BuildPreviewScreen extends StatelessWidget {
     ('weatherScreen', AppRoutes.weatherScreen),
     ('livestockList', AppRoutes.livestockList),
     ('addLivestock', AppRoutes.addLivestock),
+    ('fishList', AppRoutes.fishList),
+    ('addFish', AppRoutes.addFish),
   ];
 
   @override

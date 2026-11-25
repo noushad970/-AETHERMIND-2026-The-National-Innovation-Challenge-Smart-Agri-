@@ -13,6 +13,9 @@ import '../../features/crop_tracker/presentation/screens/crop_library_screen.dar
 import '../../features/crop_tracker/presentation/screens/crop_list_screen.dart';
 
 import '../../features/crop_tracker/presentation/screens/crop_live_track_screen.dart';
+import '../../features/fish_tracker/presentation/screens/add_fish_screen.dart';
+import '../../features/fish_tracker/presentation/screens/fish_detail_screen.dart';
+import '../../features/fish_tracker/presentation/screens/fish_list_screen.dart';
 import '../../features/livestock/presentation/screens/add_livestock_screen.dart';
 import '../../features/livestock/presentation/screens/livestock_detail_screen.dart';
 import '../../features/livestock/presentation/screens/livestock_list_screen.dart';
@@ -90,6 +93,17 @@ class AppRouter {
         final animalId = settings.arguments as String;
         return MaterialPageRoute(
           builder: (_) => LivestockLiveTrackScreen(animalId: animalId),
+        );
+
+      // Fish & Aquaculture (মৎস্য চাষ)
+      case AppRoutes.fishList:
+        return MaterialPageRoute(builder: (_) => const FishListScreen());
+      case AppRoutes.addFish:
+        return MaterialPageRoute(builder: (_) => const AddFishScreen());
+      case AppRoutes.fishDetail:
+        final pondId = settings.arguments as String;
+        return MaterialPageRoute(
+          builder: (_) => FishDetailScreen(pondId: pondId),
         );
       default:
         return _unknownRoute(settings.name);
