@@ -8,11 +8,14 @@ import 'core/routes/app_routes.dart';
 import 'core/routes/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'data/services/crops_realtime_service.dart';
+import 'data/services/crop_daily_suggestion_service.dart';
+import 'data/repositories/daily_suggestion_repository.dart';
 import 'data/services/notification_service.dart';
 import 'firebase_options.dart';
 import 'features/auth/presentation/providers/auth_provider.dart';
 import 'features/crop_tracker/data/crop_summary_provider.dart';
 import 'features/crop_tracker/presentation/providers/crops_provider.dart';
+import 'features/crop_tracker/presentation/providers/daily_suggestions_provider.dart';
 import 'core/providers/animation_mode_provider.dart';
 import 'core/providers/locale_provider.dart';
 import 'core/providers/theme_provider.dart';
@@ -98,6 +101,7 @@ class AgriApp extends StatelessWidget {
 
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => CropsRealtimeService()),
+        ChangeNotifierProvider(create: (_) => CropDailySuggestionService()),
         ChangeNotifierProxyProvider<AuthProvider, CropsProvider>(
           create: (ctx) =>
               CropsProvider(realtime: ctx.read<CropsRealtimeService>()),
@@ -110,6 +114,22 @@ class AgriApp extends StatelessWidget {
           update: (ctx, _, prev) =>
               prev ??
               CropSummaryProvider(realtime: ctx.read<CropsRealtimeService>()),
+        ),
+        ChangeNotifierProxyProvider<AuthProvider, DailySuggestionsProvider>(
+          create: (ctx) => DailySuggestionsProvider(
+            realtime: ctx.read<CropDailySuggestionService>(),
+            repository: DailySuggestionRepository(
+              svc: ctx.read<CropDailySuggestionService>(),
+            ),
+          ),
+          update: (ctx, _, prev) =>
+              prev ??
+              DailySuggestionsProvider(
+                realtime: ctx.read<CropDailySuggestionService>(),
+                repository: DailySuggestionRepository(
+                  svc: ctx.read<CropDailySuggestionService>(),
+                ),
+              ),
         ),
         ChangeNotifierProvider(create: (_) => WeatherProvider()),
         ChangeNotifierProxyProvider<AuthProvider, WeatherDailyAdviceProvider>(
