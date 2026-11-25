@@ -12,7 +12,11 @@ import 'core/providers/animation_mode_provider.dart';
 import 'core/providers/locale_provider.dart';
 import 'core/providers/theme_provider.dart';
 
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'core/widgets/network_status_overlay.dart';
+import 'data/services/network_monitor_service.dart';
+import 'data/services/offline_sync_manager.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +28,21 @@ Future<void> main() async {
     await initializeDateFormatting('en', null);
   } catch (e) {
     debugPrint('Date formatting init skipped: $e');
+  }
+
+  // Initialize Hive and all offline sync storage boxes (Crops, Livestock, Fish, Chat)
+  try {
+    await Hive.initFlutter();
+    await OfflineSyncManager.instance.init();
+  } catch (e) {
+    debugPrint('Hive init error: $e');
+  }
+
+  // Initialize network monitor for real-time mobile data & Wi-Fi connectivity
+  try {
+    await NetworkMonitorService.instance.init();
+  } catch (e) {
+    debugPrint('Network monitor init error: $e');
   }
 
   // Initialize timezone data needed by scheduled notifications.
@@ -127,7 +146,7 @@ class AgriApp extends StatelessWidget {
                   ],
                 );
               }
-              return currentChild;
+              return NetworkStatusOverlay(child: currentChild);
             },
           );
         },
