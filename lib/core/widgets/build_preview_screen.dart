@@ -20,6 +20,7 @@ class BuildPreviewScreen extends StatelessWidget {
     ('diseaseDetect', AppRoutes.diseaseDetect),
     ('chatbot', AppRoutes.chatbot),
     ('weatherScreen', AppRoutes.weatherScreen),
+    ('marketPrices', AppRoutes.marketPrices),
     ('notifications', AppRoutes.notifications),
     ('livestockList', AppRoutes.livestockList),
     ('addLivestock', AppRoutes.addLivestock),

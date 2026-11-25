@@ -21,6 +21,7 @@ import '../../features/livestock/presentation/screens/add_livestock_screen.dart'
 import '../../features/livestock/presentation/screens/livestock_detail_screen.dart';
 import '../../features/livestock/presentation/screens/livestock_list_screen.dart';
 import '../../features/livestock/presentation/screens/livestock_live_track_screen.dart';
+import '../../features/market_prices/presentation/screens/market_prices_screen.dart';
 import '../../features/notifications/presentation/screens/notifications_screen.dart';
 import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
 import '../../features/onboarding/presentation/screens/app_tutorial_screen.dart';
@@ -80,6 +81,10 @@ class AppRouter {
       // Weather
       case AppRoutes.weatherScreen:
         return MaterialPageRoute(builder: (_) => const WeatherScreen());
+
+      // Market prices
+      case AppRoutes.marketPrices:
+        return MaterialPageRoute(builder: (_) => const MarketPricesScreen());
 
       // Notifications
       case AppRoutes.notifications:
