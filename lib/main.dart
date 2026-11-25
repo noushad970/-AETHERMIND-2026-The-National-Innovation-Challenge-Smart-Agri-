@@ -35,6 +35,7 @@ import 'features/fish_tracker/presentation/providers/fish_daily_suggestions_prov
 import 'features/fish_tracker/presentation/providers/fish_provider.dart';
 import 'features/livestock/presentation/providers/livestock_daily_suggestions_provider.dart';
 import 'features/livestock/presentation/providers/livestock_provider.dart';
+import 'features/market_prices/presentation/providers/market_prices_provider.dart';
 import 'core/providers/animation_mode_provider.dart';
 import 'core/providers/locale_provider.dart';
 import 'core/providers/theme_provider.dart';
@@ -177,6 +178,7 @@ class AgriApp extends StatelessWidget {
               WeatherDailyAdviceProvider(weather: ctx.read<WeatherProvider>()),
           update: (_, _, prev) => prev ?? WeatherDailyAdviceProvider(),
         ),
+        ChangeNotifierProvider(create: (_) => MarketPricesProvider()..load()),
         ChangeNotifierProvider(create: (_) => NotificationProvider()..loadLocalNotifications()),
 
         ChangeNotifierProxyProvider<
