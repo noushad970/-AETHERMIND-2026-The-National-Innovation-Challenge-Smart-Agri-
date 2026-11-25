@@ -14,6 +14,7 @@ class BuildPreviewScreen extends StatelessWidget {
     ('onboarding', AppRoutes.onboarding),
     ('appTutorial', AppRoutes.appTutorial),
     ('login', AppRoutes.login),
+    ('home', AppRoutes.home),
     ('cropList', AppRoutes.cropList),
     ('addCrop', AppRoutes.addCrop),
     ('cropLibrary', AppRoutes.cropLibrary),

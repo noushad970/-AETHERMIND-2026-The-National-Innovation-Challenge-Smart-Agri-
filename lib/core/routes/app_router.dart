@@ -17,6 +17,7 @@ import '../../features/crop_tracker/presentation/screens/crop_live_track_screen.
 import '../../features/farm_records/presentation/screens/add_expense_screen.dart';
 import '../../features/farm_records/presentation/screens/expense_list_screen.dart';
 import '../../features/farm_records/presentation/screens/farm_records_screen.dart';
+import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/fish_tracker/presentation/screens/add_fish_screen.dart';
 import '../../features/fish_tracker/presentation/screens/fish_detail_screen.dart';
 import '../../features/fish_tracker/presentation/screens/fish_list_screen.dart';
@@ -52,6 +53,9 @@ class AppRouter {
       case AppRoutes.login:
       case AppRoutes.register:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
+
+      case AppRoutes.home:
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
 
       // Crop tracker
       case AppRoutes.cropList:
