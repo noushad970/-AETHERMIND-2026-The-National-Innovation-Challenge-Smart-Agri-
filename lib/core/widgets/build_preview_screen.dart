@@ -14,6 +14,7 @@ class BuildPreviewScreen extends StatelessWidget {
     ('onboarding', AppRoutes.onboarding),
     ('appTutorial', AppRoutes.appTutorial),
     ('login', AppRoutes.login),
+    ('weatherScreen', AppRoutes.weatherScreen),
   ];
 
   @override

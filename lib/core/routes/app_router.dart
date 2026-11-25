@@ -5,6 +5,7 @@ import '../../features/auth/presentation/screens/login_screen.dart';
 
 import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
 import '../../features/onboarding/presentation/screens/app_tutorial_screen.dart';
+import '../../features/weather/presentation/screens/weather_screen.dart';
 import '../widgets/build_preview_screen.dart';
 import 'app_routes.dart';
 
@@ -23,6 +24,10 @@ class AppRouter {
       case AppRoutes.login:
       case AppRoutes.register:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
+
+      // Weather
+      case AppRoutes.weatherScreen:
+        return MaterialPageRoute(builder: (_) => const WeatherScreen());
       default:
         return _unknownRoute(settings.name);
     }
