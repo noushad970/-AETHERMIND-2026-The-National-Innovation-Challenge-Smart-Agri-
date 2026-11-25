@@ -11,6 +11,8 @@ class BuildPreviewScreen extends StatelessWidget {
   const BuildPreviewScreen({super.key});
 
   static const List<(String, String)> _routes = [
+    ('onboarding', AppRoutes.onboarding),
+    ('appTutorial', AppRoutes.appTutorial),
     ('login', AppRoutes.login),
   ];
 

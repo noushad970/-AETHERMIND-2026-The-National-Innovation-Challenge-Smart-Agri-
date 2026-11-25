@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../../features/auth/presentation/screens/login_screen.dart';
 
+import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
+import '../../features/onboarding/presentation/screens/app_tutorial_screen.dart';
 import '../widgets/build_preview_screen.dart';
 import 'app_routes.dart';
 
@@ -14,6 +16,10 @@ class AppRouter {
     switch (settings.name) {
       case AppRoutes.splash:
         return MaterialPageRoute(builder: (_) => const BuildPreviewScreen());
+      case AppRoutes.onboarding:
+        return MaterialPageRoute(builder: (_) => const OnboardingScreen());
+      case AppRoutes.appTutorial:
+        return MaterialPageRoute(builder: (_) => const AppTutorialScreen());
       case AppRoutes.login:
       case AppRoutes.register:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
