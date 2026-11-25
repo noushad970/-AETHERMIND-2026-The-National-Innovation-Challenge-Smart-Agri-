@@ -61,7 +61,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     } catch (_) {}
 
     if (!mounted) return;
-    Navigator.of(context).pushReplacementNamed(AppRoutes.splash);
+    Navigator.of(context).pushReplacementNamed(AppRoutes.appStart);
   }
 
   @override

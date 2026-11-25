@@ -2,7 +2,11 @@
 class AppRoutes {
   AppRoutes._();
 
+  /// The first page: the landing page on the web, the start screen elsewhere.
   static const String splash = '/';
+
+  /// The animated start screen, which leads on to welcome, login or home.
+  static const String appStart = '/start';
   static const String onboarding = '/onboarding';
   static const String appTutorial = '/app-tutorial';
   static const String login = '/login';

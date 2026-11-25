@@ -22,6 +22,7 @@ class DesktopShell extends StatelessWidget {
   /// Full-window pages that come before the user is inside the app.
   static const Set<String> routesWithoutSidebar = {
     AppRoutes.splash,
+    AppRoutes.appStart,
     AppRoutes.onboarding,
     AppRoutes.appTutorial,
     AppRoutes.login,

@@ -23,6 +23,7 @@ class DesktopPageStyle {
   static DesktopPageStyle forRoute(String? route) {
     switch (route) {
       case AppRoutes.splash:
+      case AppRoutes.appStart:
       case AppRoutes.home:
         return full;
       case AppRoutes.login:

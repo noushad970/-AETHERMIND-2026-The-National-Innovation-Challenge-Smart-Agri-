@@ -295,6 +295,9 @@ class AgriApp extends StatelessWidget {
             navigatorObservers: [AppNavigation.routeTracker],
             scrollBehavior: const AppScrollBehavior(),
             initialRoute: AppRoutes.splash,
+            onGenerateInitialRoutes: AppRouter.showLandingPage
+                ? AppRouter.landingInitialRoutes
+                : null,
             onGenerateRoute: AppRouter.generate,
             builder: (context, child) {
               Widget currentChild = child ?? const SizedBox();

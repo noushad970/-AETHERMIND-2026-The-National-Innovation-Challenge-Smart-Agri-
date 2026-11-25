@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../layout/app_navigation.dart';
@@ -26,6 +27,7 @@ import '../../features/fish_tracker/presentation/screens/fish_detail_screen.dart
 import '../../features/fish_tracker/presentation/screens/fish_list_screen.dart';
 import '../../features/fish_tracker/presentation/screens/fish_live_track_screen.dart';
 import '../../features/krishi_helpline/presentation/screens/krishi_helpline_screen.dart';
+import '../../features/landing/presentation/screens/landing_screen.dart';
 import '../../features/livestock/presentation/screens/add_livestock_screen.dart';
 import '../../features/livestock/presentation/screens/livestock_detail_screen.dart';
 import '../../features/livestock/presentation/screens/livestock_list_screen.dart';
@@ -44,9 +46,23 @@ import 'app_routes.dart';
 class AppRouter {
   AppRouter._();
 
+  /// The website opens on a landing page; the apps open straight away.
+  static const bool showLandingPage = kIsWeb;
+
+  /// Starts the website on the landing page, whatever address was typed, so
+  /// that every visit goes through the start screen and its sign-in check.
+  static List<Route<dynamic>> landingInitialRoutes(String _) => [
+    generate(const RouteSettings(name: AppRoutes.splash))!,
+  ];
+
   static Route<dynamic>? generate(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutes.splash:
+        return _page(
+          settings,
+          (_) => showLandingPage ? const LandingScreen() : const SplashScreen(),
+        );
+      case AppRoutes.appStart:
         return _page(settings, (_) => const SplashScreen());
       case AppRoutes.onboarding:
         return _page(settings, (_) => const OnboardingScreen());
