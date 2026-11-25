@@ -21,6 +21,7 @@ import '../../features/fish_tracker/presentation/screens/add_fish_screen.dart';
 import '../../features/fish_tracker/presentation/screens/fish_detail_screen.dart';
 import '../../features/fish_tracker/presentation/screens/fish_list_screen.dart';
 import '../../features/fish_tracker/presentation/screens/fish_live_track_screen.dart';
+import '../../features/krishi_helpline/presentation/screens/krishi_helpline_screen.dart';
 import '../../features/livestock/presentation/screens/add_livestock_screen.dart';
 import '../../features/livestock/presentation/screens/livestock_detail_screen.dart';
 import '../../features/livestock/presentation/screens/livestock_list_screen.dart';
@@ -135,6 +136,10 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => FishLiveTrackScreen(pondId: pondId),
         );
+
+      // Krishi Helpline
+      case AppRoutes.krishiHelpline:
+        return MaterialPageRoute(builder: (_) => const KrishiHelplineScreen());
 
       // Crop Yield & Revenue Forecaster
       case AppRoutes.yieldForecaster:
