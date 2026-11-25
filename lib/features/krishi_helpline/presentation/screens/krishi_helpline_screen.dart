@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/constants/app_strings.dart';
+import '../../../../core/layout/adaptive_card_list.dart';
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/widgets/header_action_bar.dart';
@@ -65,6 +66,11 @@ class _KrishiHelplineScreenState extends State<KrishiHelplineScreen> {
     final officers = ExtensionOfficerService.searchOfficers(
       query: _searchQuery,
       selectedDivision: _selectedDivision,
+    );
+    final columns = adaptiveColumns(
+      context,
+      MediaQuery.sizeOf(context).width - 32,
+      minItemWidth: 440,
     );
 
     return Scaffold(
@@ -266,18 +272,26 @@ class _KrishiHelplineScreenState extends State<KrishiHelplineScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    final officer = officers[index];
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 12.0),
-                      child: _OfficerContactCard(
-                        officer: officer,
-                        onCall: () => _makeCall(officer.phone),
-                        onSms: () => _sendSms(officer.phone),
-                      ),
-                    );
-                  },
-                  childCount: officers.length,
+                  (context, row) => Padding(
+                    padding: const EdgeInsets.only(bottom: 12.0),
+                    child: AdaptiveCardRow(
+                      row: row,
+                      columns: columns,
+                      itemCount: officers.length,
+                      itemBuilder: (context, index) {
+                        final officer = officers[index];
+                        return _OfficerContactCard(
+                          officer: officer,
+                          onCall: () => _makeCall(officer.phone),
+                          onSms: () => _sendSms(officer.phone),
+                        );
+                      },
+                    ),
+                  ),
+                  childCount: AdaptiveCardRow.rowCount(
+                    officers.length,
+                    columns,
+                  ),
                 ),
               ),
             ),

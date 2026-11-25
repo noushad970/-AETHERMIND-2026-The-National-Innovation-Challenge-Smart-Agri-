@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/constants/app_strings.dart';
+import '../../../../core/layout/adaptive_card_list.dart';
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/widgets/agri_atmospheric_background.dart';
@@ -329,10 +330,13 @@ class _MarketPricesScreenState extends State<MarketPricesScreen> {
                       }
                       return RefreshIndicator(
                         onRefresh: () => prov.refreshWithGemini(),
-                        child: ListView.separated(
+                        child: AdaptiveCardList(
+                          minItemWidth: 380,
                           padding: const EdgeInsets.symmetric(vertical: 8),
+                          // The price cards carry their own side margins.
+                          spacing: 0,
+                          separator: const Divider(height: 1),
                           itemCount: filtered.length,
-                          separatorBuilder: (_, _) => const Divider(height: 1),
                           itemBuilder: (context, i) =>
                               _PriceTile(price: filtered[i]),
                         ),

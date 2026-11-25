@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../core/layout/desktop_scope.dart';
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/widgets/header_action_bar.dart';
@@ -330,12 +331,19 @@ class _CropLibraryScreenState extends State<CropLibraryScreen> {
                   )
                 : GridView.builder(
                     padding: const EdgeInsets.all(12),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.82,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                    ),
+                    gridDelegate: DesktopScope.of(context)
+                        ? const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 260,
+                            childAspectRatio: 0.82,
+                            crossAxisSpacing: 14,
+                            mainAxisSpacing: 14,
+                          )
+                        : const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.82,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                          ),
                     itemCount: filteredCrops.length,
                     itemBuilder: (context, index) {
                       final crop = filteredCrops[index];

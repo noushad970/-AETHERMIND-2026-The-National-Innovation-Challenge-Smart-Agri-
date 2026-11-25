@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../core/layout/adaptive_card_list.dart';
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/theme/app_theme.dart';
@@ -60,9 +61,9 @@ class FishListScreen extends StatelessWidget {
                 );
               }
 
-              return ListView(
-                padding: const EdgeInsets.all(16),
-                children: [
+              return AdaptiveCardList(
+                minItemWidth: 420,
+                header: [
                   _FishSummaryHeader(
                     totalPonds: fishProv.totalPonds,
                     totalLiveFish: fishProv.totalLiveFish,
@@ -90,12 +91,12 @@ class FishListScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 12),
-                  for (final pond in ponds) ...[
-                    _FishPondCard(pond: pond, isBn: isBn),
-                    const SizedBox(height: 12),
-                  ],
-                  const SizedBox(height: 60),
                 ],
+                itemCount: ponds.length,
+                itemBuilder: (context, i) =>
+                    _FishPondCard(pond: ponds[i], isBn: isBn),
+                // Keeps the last card clear of the add button.
+                footer: const [SizedBox(height: 72)],
               );
             },
           ),

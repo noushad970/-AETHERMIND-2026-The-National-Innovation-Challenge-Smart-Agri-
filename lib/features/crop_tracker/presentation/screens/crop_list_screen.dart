@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/constants/app_strings.dart';
+import '../../../../core/layout/adaptive_card_list.dart';
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/theme/app_theme.dart';
@@ -105,10 +106,9 @@ class CropListScreen extends StatelessWidget {
               }
               return RefreshIndicator(
                 onRefresh: prov.refreshFromCloud,
-                child: ListView.separated(
-                  padding: const EdgeInsets.all(16),
+                child: AdaptiveCardList(
+                  minItemWidth: 420,
                   itemCount: crops.length,
-                  separatorBuilder: (_, _) => const SizedBox(height: 12),
                   itemBuilder: (context, i) => _CropCard(crop: crops[i]),
                 ),
               );

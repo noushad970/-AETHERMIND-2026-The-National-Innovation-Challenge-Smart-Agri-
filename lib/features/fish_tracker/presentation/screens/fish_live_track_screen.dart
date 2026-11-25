@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../core/layout/desktop_scope.dart';
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/theme/app_theme.dart';
@@ -467,7 +468,7 @@ class _FishStatsGrid extends StatelessWidget {
     final total = activities.length;
 
     return GridView.count(
-      crossAxisCount: 2,
+      crossAxisCount: DesktopScope.of(context) ? 4 : 2,
       crossAxisSpacing: 12,
       mainAxisSpacing: 12,
       shrinkWrap: true,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/constants/app_strings.dart';
+import '../../../../core/layout/adaptive_card_list.dart';
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/theme/app_theme.dart';
@@ -105,16 +106,15 @@ class LivestockListScreen extends StatelessWidget {
             }
             return RefreshIndicator(
               onRefresh: prov.refreshFromCloud,
-              child: ListView(
-                padding: const EdgeInsets.all(16),
-                children: [
+              child: AdaptiveCardList(
+                minItemWidth: 420,
+                header: [
                   _SummaryStrip(prov: prov),
                   const SizedBox(height: 12),
-                  for (final a in animals) ...[
-                    _AnimalCard(animal: a),
-                    const SizedBox(height: 12),
-                  ],
                 ],
+                itemCount: animals.length,
+                itemBuilder: (context, i) => _AnimalCard(animal: animals[i]),
+                footer: const [SizedBox(height: 12)],
               ),
             );
           },
