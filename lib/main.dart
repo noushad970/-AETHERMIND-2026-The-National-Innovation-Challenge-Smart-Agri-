@@ -7,6 +7,7 @@ import 'core/constants/app_strings.dart';
 import 'core/routes/app_routes.dart';
 import 'core/routes/app_router.dart';
 import 'core/theme/app_theme.dart';
+import 'data/services/notification_service.dart';
 import 'firebase_options.dart';
 import 'features/auth/presentation/providers/auth_provider.dart';
 import 'core/providers/animation_mode_provider.dart';
@@ -51,6 +52,13 @@ Future<void> main() async {
     tz_data.initializeTimeZones();
   } catch (e) {
     debugPrint('Timezone init error: $e');
+  }
+
+  // Initialize local notifications.
+  try {
+    await NotificationService.instance.init();
+  } catch (e) {
+    debugPrint('NotificationService init error: $e');
   }
 
   // Initialize Firebase.
