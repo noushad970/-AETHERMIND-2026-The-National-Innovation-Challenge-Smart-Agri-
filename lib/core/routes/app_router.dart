@@ -13,6 +13,9 @@ import '../../features/crop_tracker/presentation/screens/crop_library_screen.dar
 import '../../features/crop_tracker/presentation/screens/crop_list_screen.dart';
 
 import '../../features/crop_tracker/presentation/screens/crop_live_track_screen.dart';
+import '../../features/farm_records/presentation/screens/add_expense_screen.dart';
+import '../../features/farm_records/presentation/screens/expense_list_screen.dart';
+import '../../features/farm_records/presentation/screens/farm_records_screen.dart';
 import '../../features/fish_tracker/presentation/screens/add_fish_screen.dart';
 import '../../features/fish_tracker/presentation/screens/fish_detail_screen.dart';
 import '../../features/fish_tracker/presentation/screens/fish_list_screen.dart';
@@ -85,6 +88,14 @@ class AppRouter {
       // Market prices
       case AppRoutes.marketPrices:
         return MaterialPageRoute(builder: (_) => const MarketPricesScreen());
+
+      // Farm records
+      case AppRoutes.farmRecords:
+        return MaterialPageRoute(builder: (_) => const FarmRecordsScreen());
+      case AppRoutes.expenseList:
+        return MaterialPageRoute(builder: (_) => const ExpenseListScreen());
+      case AppRoutes.addExpense:
+        return MaterialPageRoute(builder: (_) => const AddExpenseScreen());
 
       // Notifications
       case AppRoutes.notifications:
