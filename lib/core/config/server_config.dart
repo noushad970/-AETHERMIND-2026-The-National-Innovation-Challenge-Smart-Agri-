@@ -5,10 +5,8 @@
 class ServerConfig {
   ServerConfig._();
 
-  /// Base URL of your dedicated Smart Agri cPanel backend.
-  /// Points to public_html/SmartAgriServer/api
-  /// 
-  /// You can override this at build or runtime with:
+  /// Base URL of your dedicated Smart Agri backend (see SmartAgriServer/).
+  /// Empty by default. Supply it at build or run time with:
   /// flutter run --dart-define=SERVER_BASE_URL=https://yourdomain.com/SmartAgriServer/api
   static const String baseUrl = String.fromEnvironment(
     'SERVER_BASE_URL',
@@ -21,6 +19,10 @@ class ServerConfig {
     'SMART_AGRI_SECRET',
     defaultValue: '',
   );
+
+  /// True when a backend URL was supplied. Without one the app skips the
+  /// server and calls Gemini directly using GEMINI_API_KEY.
+  static bool get isConfigured => baseUrl.isNotEmpty;
 
   /// Maximum crop disease images allowed per user per day.
   static const int maxDailyDiseaseScans = 2;
