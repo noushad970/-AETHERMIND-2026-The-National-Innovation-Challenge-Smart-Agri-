@@ -1,3 +1,4 @@
+import 'package:ai_agri_assistant/core/layout/app_navigation.dart';
 import 'package:ai_agri_assistant/core/routes/app_router.dart';
 import 'package:ai_agri_assistant/core/routes/app_routes.dart';
 import 'package:ai_agri_assistant/core/theme/app_theme.dart';
@@ -128,7 +129,8 @@ void main() {
     for (final address in ['/', '/home', '/start']) {
       final routes = AppRouter.landingInitialRoutes(address);
       expect(routes, hasLength(1));
-      expect(routes.single.settings.name, AppRoutes.splash);
+      final first = routes.single as AppPageRoute;
+      expect(first.routeName, AppRoutes.splash);
     }
   });
 }
