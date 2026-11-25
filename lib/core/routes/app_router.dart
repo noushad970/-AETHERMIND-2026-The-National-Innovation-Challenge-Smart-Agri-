@@ -16,6 +16,7 @@ import '../../features/crop_tracker/presentation/screens/crop_live_track_screen.
 import '../../features/fish_tracker/presentation/screens/add_fish_screen.dart';
 import '../../features/fish_tracker/presentation/screens/fish_detail_screen.dart';
 import '../../features/fish_tracker/presentation/screens/fish_list_screen.dart';
+import '../../features/fish_tracker/presentation/screens/fish_live_track_screen.dart';
 import '../../features/livestock/presentation/screens/add_livestock_screen.dart';
 import '../../features/livestock/presentation/screens/livestock_detail_screen.dart';
 import '../../features/livestock/presentation/screens/livestock_list_screen.dart';
@@ -104,6 +105,11 @@ class AppRouter {
         final pondId = settings.arguments as String;
         return MaterialPageRoute(
           builder: (_) => FishDetailScreen(pondId: pondId),
+        );
+      case AppRoutes.fishLiveTrack:
+        final pondId = settings.arguments as String;
+        return MaterialPageRoute(
+          builder: (_) => FishLiveTrackScreen(pondId: pondId),
         );
       default:
         return _unknownRoute(settings.name);
