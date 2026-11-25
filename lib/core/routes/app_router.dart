@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 
 import '../../features/auth/presentation/screens/login_screen.dart';
+import '../../features/crop_tracker/presentation/screens/add_crop_screen.dart';
+
+import '../../features/crop_tracker/presentation/screens/crop_library_screen.dart';
+import '../../features/crop_tracker/presentation/screens/crop_list_screen.dart';
 
 import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
 import '../../features/onboarding/presentation/screens/app_tutorial_screen.dart';
@@ -24,6 +28,14 @@ class AppRouter {
       case AppRoutes.login:
       case AppRoutes.register:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
+
+      // Crop tracker
+      case AppRoutes.cropList:
+        return MaterialPageRoute(builder: (_) => const CropListScreen());
+      case AppRoutes.addCrop:
+        return MaterialPageRoute(builder: (_) => const AddCropScreen());
+      case AppRoutes.cropLibrary:
+        return MaterialPageRoute(builder: (_) => const CropLibraryScreen());
 
       // Weather
       case AppRoutes.weatherScreen:
