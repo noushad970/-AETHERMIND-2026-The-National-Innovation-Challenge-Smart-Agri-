@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +15,8 @@ import 'data/services/chat_realtime_service.dart';
 import 'data/services/livestock_children_service.dart';
 import 'data/services/livestock_realtime_service.dart';
 import 'data/repositories/daily_suggestion_repository.dart';
+import 'data/repositories/livestock_daily_suggestion_repository.dart';
+import 'data/repositories/livestock_repository.dart';
 import 'data/services/notification_service.dart';
 import 'firebase_options.dart';
 import 'features/auth/presentation/providers/auth_provider.dart';
@@ -21,6 +25,8 @@ import 'features/crop_tracker/data/crop_summary_provider.dart';
 import 'features/crop_tracker/presentation/providers/crops_provider.dart';
 import 'features/crop_tracker/presentation/providers/daily_suggestions_provider.dart';
 import 'features/ai_disease/presentation/providers/disease_detection_provider.dart';
+import 'features/livestock/presentation/providers/livestock_daily_suggestions_provider.dart';
+import 'features/livestock/presentation/providers/livestock_provider.dart';
 import 'core/providers/animation_mode_provider.dart';
 import 'core/providers/locale_provider.dart';
 import 'core/providers/theme_provider.dart';
@@ -151,6 +157,45 @@ class AgriApp extends StatelessWidget {
           create: (ctx) =>
               WeatherDailyAdviceProvider(weather: ctx.read<WeatherProvider>()),
           update: (_, _, prev) => prev ?? WeatherDailyAdviceProvider(),
+        ),
+
+        ChangeNotifierProxyProvider<
+          AuthProvider,
+          LivestockDailySuggestionsProvider
+        >(
+          create: (ctx) => LivestockDailySuggestionsProvider(
+            realtime: ctx.read<LivestockChildrenService>(),
+            repository: LivestockDailySuggestionRepository(
+              svc: ctx.read<LivestockChildrenService>(),
+            ),
+          ),
+          update: (ctx, _, prev) =>
+              prev ??
+              LivestockDailySuggestionsProvider(
+                realtime: ctx.read<LivestockChildrenService>(),
+                repository: LivestockDailySuggestionRepository(
+                  svc: ctx.read<LivestockChildrenService>(),
+                ),
+              ),
+        ),
+        ChangeNotifierProxyProvider<AuthProvider, LivestockProvider>(
+          create: (ctx) {
+            final livestock = LivestockProvider(
+              realtime: ctx.read<LivestockRealtimeService>(),
+              repository: LivestockRepository(
+                animals: ctx.read<LivestockRealtimeService>(),
+                children: ctx.read<LivestockChildrenService>(),
+              ),
+            );
+            final suggestions = ctx.read<LivestockDailySuggestionsProvider>();
+            livestock.setSuggestionRefreshHook((animalId) {
+              final animal = livestock.byId(animalId);
+              if (animal == null) return;
+              unawaited(suggestions.ensureToday(animal, null));
+            });
+            return livestock;
+          },
+          update: (_, _, prev) => prev ?? LivestockProvider(),
         ),
       ],
       child: Consumer2<LocaleProvider, ThemeProvider>(
