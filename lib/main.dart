@@ -45,6 +45,8 @@ import 'features/weather/presentation/providers/weather_provider.dart';
 import 'features/notifications/presentation/providers/notification_provider.dart';
 import 'features/farm_records/presentation/providers/expenses_provider.dart';
 
+
+
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'core/widgets/network_status_overlay.dart';
@@ -128,8 +130,14 @@ class AgriApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LocaleProvider()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => AnimationModeProvider()),
+        // AuthProvider drives sign-in state. Realtime services bind
 
+        // themselves to the auth user inside their own constructors,
+        // so all providers share a single Firestore snapshot stream.
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        // CropsRealtimeService is shared between CropsProvider and
+        // CropSummaryProvider so both subscribe to the same Firestore
+        // snapshot stream instead of opening duplicate listeners.
         ChangeNotifierProvider(create: (_) => CropsRealtimeService()),
         ChangeNotifierProvider(create: (_) => LivestockRealtimeService()),
         ChangeNotifierProvider(create: (_) => FishRealtimeService()),
@@ -251,6 +259,10 @@ class AgriApp extends StatelessWidget {
                 children: ctx.read<FishChildrenService>(),
               ),
         ),
+        // Daily suggestion updater: on login (and every 30 min while
+        // the app is open) it regenerates today's AI suggestion for
+        // every crop and animal and persists it to Firestore, so the
+        // tracking pages always open with a ready-made suggestion.
         Provider<DailySuggestionUpdateService>(
           create: (ctx) => DailySuggestionUpdateService(
             crops: ctx.read<CropsRealtimeService>(),

@@ -38,6 +38,9 @@ import '../../features/weather/presentation/screens/weather_screen.dart';
 import '../../features/yield_forecaster/presentation/screens/yield_forecaster_screen.dart';
 import 'app_routes.dart';
 
+
+
+
 /// Generates [MaterialPageRoute]s for all named routes in [AppRoutes].
 class AppRouter {
   AppRouter._();
@@ -74,6 +77,7 @@ class AppRouter {
         );
       case AppRoutes.cropLibrary:
         return MaterialPageRoute(builder: (_) => const CropLibraryScreen());
+
 
       // AI Disease
       case AppRoutes.diseaseDetect:
@@ -161,8 +165,13 @@ class AppRouter {
       // Community Agri Feed
       case AppRoutes.communityFeed:
         return MaterialPageRoute(builder: (_) => const CommunityFeedScreen());
+
       default:
         return _unknownRoute(settings.name);
+
+
+
+
     }
   }
 
