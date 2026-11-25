@@ -17,6 +17,7 @@ import 'data/services/fish_realtime_service.dart';
 import 'data/services/livestock_children_service.dart';
 import 'data/services/livestock_realtime_service.dart';
 import 'data/repositories/daily_suggestion_repository.dart';
+import 'data/repositories/fish_daily_suggestion_repository.dart';
 import 'data/repositories/livestock_daily_suggestion_repository.dart';
 import 'data/repositories/livestock_repository.dart';
 import 'data/services/notification_service.dart';
@@ -27,6 +28,8 @@ import 'features/crop_tracker/data/crop_summary_provider.dart';
 import 'features/crop_tracker/presentation/providers/crops_provider.dart';
 import 'features/crop_tracker/presentation/providers/daily_suggestions_provider.dart';
 import 'features/ai_disease/presentation/providers/disease_detection_provider.dart';
+import 'features/fish_tracker/presentation/providers/fish_daily_suggestions_provider.dart';
+import 'features/fish_tracker/presentation/providers/fish_provider.dart';
 import 'features/livestock/presentation/providers/livestock_daily_suggestions_provider.dart';
 import 'features/livestock/presentation/providers/livestock_provider.dart';
 import 'core/providers/animation_mode_provider.dart';
@@ -200,6 +203,34 @@ class AgriApp extends StatelessWidget {
             return livestock;
           },
           update: (_, _, prev) => prev ?? LivestockProvider(),
+        ),
+        ChangeNotifierProxyProvider<AuthProvider, FishDailySuggestionsProvider>(
+          create: (ctx) => FishDailySuggestionsProvider(
+            realtime: ctx.read<FishChildrenService>(),
+            repository: FishDailySuggestionRepository(
+              svc: ctx.read<FishChildrenService>(),
+            ),
+          ),
+          update: (ctx, _, prev) =>
+              prev ??
+              FishDailySuggestionsProvider(
+                realtime: ctx.read<FishChildrenService>(),
+                repository: FishDailySuggestionRepository(
+                  svc: ctx.read<FishChildrenService>(),
+                ),
+              ),
+        ),
+        ChangeNotifierProxyProvider<AuthProvider, FishProvider>(
+          create: (ctx) => FishProvider(
+            realtime: ctx.read<FishRealtimeService>(),
+            children: ctx.read<FishChildrenService>(),
+          ),
+          update: (ctx, _, prev) =>
+              prev ??
+              FishProvider(
+                realtime: ctx.read<FishRealtimeService>(),
+                children: ctx.read<FishChildrenService>(),
+              ),
         ),
       ],
       child: Consumer2<LocaleProvider, ThemeProvider>(
