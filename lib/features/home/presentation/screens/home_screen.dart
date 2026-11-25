@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/constants/app_strings.dart';
+import '../../../../core/layout/desktop_scope.dart';
 import '../../../../core/providers/animation_mode_provider.dart';
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../core/routes/app_routes.dart';
@@ -17,6 +18,7 @@ import '../../../crop_tracker/data/crop_summary_provider.dart';
 import '../../../notifications/presentation/providers/notification_provider.dart';
 import '../../../weather/presentation/providers/weather_provider.dart';
 import '../../../../data/models/crop.dart';
+import '../widgets/desktop_home_view.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -69,6 +71,19 @@ class _HomeScreenState extends State<HomeScreen> {
     final condStr = weatherData != null
         ? (isBn ? weatherData.conditionLabelBn : weatherData.conditionLabel)
         : (isBn ? 'আবহাওয়া দেখতে চাপুন' : 'Tap to check the weather');
+
+    // Wide windows get a website-style page; the sidebar holds the actions
+    // that sit in the app bar on phones.
+    if (DesktopScope.of(context)) {
+      return _desktopPage(
+        context,
+        crops: crops,
+        greeting: greeting,
+        displayName: displayName,
+        temperature: tempStr,
+        condition: condStr,
+      );
+    }
 
     return Scaffold(
       body: AgriAnimationClockScope(
@@ -259,6 +274,76 @@ class _HomeScreenState extends State<HomeScreen> {
         label: Text(
           context.tr(AppStrings.addCrop, AppStrings.addCropBn),
           style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+
+  Widget _desktopPage(
+    BuildContext context, {
+    required CropSummaryProvider crops,
+    required String greeting,
+    required String displayName,
+    required String temperature,
+    required String condition,
+  }) {
+    final isBn = context.isBn;
+    List<Widget> cards(_HomeSection section) =>
+        _FeatureGrid(section: section)._cards(context, isBn);
+
+    return Scaffold(
+      body: SafeArea(
+        child: AgriAnimationClockScope(
+          child: DesktopHomeView(
+            isBn: isBn,
+            greeting: greeting,
+            displayName: displayName,
+            temperature: temperature,
+            condition: condition,
+            activeCropCount: crops.isLoading ? null : crops.activeCropCount,
+            heroBackground: const AgriAtmosphericBackground(
+              child: SizedBox.shrink(),
+            ),
+            activeCrops: _ActiveCropsCard(summary: crops),
+            recentCrops: crops.recent.isEmpty
+                ? null
+                : _RecentCropsCard(summary: crops),
+            sections: [
+              DesktopFeatureSection(
+                title: context.tr('AI Tools', 'এআই সেবা'),
+                description: context.tr(
+                  'Instant help for sick crops and farming questions.',
+                  'ফসলের রোগ ও চাষাবাদের প্রশ্নে তাৎক্ষণিক সহায়তা।',
+                ),
+                cards: cards(_HomeSection.primary),
+              ),
+              DesktopFeatureSection(
+                title: context.tr('My Farm', 'আমার খামার'),
+                description: context.tr(
+                  'Crops, livestock, fish ponds and accounts.',
+                  'ফসল, গবাদিপশু, মাছের পুকুর ও হিসাব।',
+                ),
+                cards: cards(_HomeSection.myFarm),
+              ),
+              DesktopFeatureSection(
+                title: context.tr('Plan & Decide', 'পরিকল্পনা ও সিদ্ধান্ত'),
+                description: context.tr(
+                  'Weather, water, prices and expected harvest.',
+                  'আবহাওয়া, পানি, বাজার দর ও সম্ভাব্য ফলন।',
+                ),
+                cards: cards(_HomeSection.plan),
+              ),
+              DesktopFeatureSection(
+                title: context.tr('Learn & Connect', 'শিখুন ও যোগাযোগ করুন'),
+                description: context.tr(
+                  'Guides, other farmers and agriculture officers.',
+                  'নির্দেশিকা, অন্য কৃষক ও কৃষি কর্মকর্তা।',
+                ),
+                cards: cards(_HomeSection.learn),
+              ),
+            ],
+            onOpen: (route) => Navigator.of(context).pushNamed(route),
+          ),
         ),
       ),
     );
