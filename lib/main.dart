@@ -12,6 +12,7 @@ import 'core/theme/app_theme.dart';
 import 'data/services/crops_realtime_service.dart';
 import 'data/services/crop_daily_suggestion_service.dart';
 import 'data/services/chat_realtime_service.dart';
+import 'data/services/feeding_alarm_service.dart';
 import 'data/services/fish_children_service.dart';
 import 'data/services/fish_realtime_service.dart';
 import 'data/services/livestock_children_service.dart';
@@ -85,6 +86,13 @@ Future<void> main() async {
     debugPrint('NotificationService init error: $e');
   }
 
+  // Initialize feeding alarm system with audio and heads-up channels
+  try {
+    await FeedingAlarmService.instance.init();
+  } catch (e) {
+    debugPrint('FeedingAlarmService init error: $e');
+  }
+
   // Initialize Firebase.
   Object? firebaseInitError;
   try {
@@ -122,6 +130,7 @@ class AgriApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CropDailySuggestionService()),
         ChangeNotifierProvider(create: (_) => LivestockChildrenService()),
         ChangeNotifierProvider(create: (_) => FishChildrenService()),
+        ChangeNotifierProvider.value(value: FeedingAlarmService.instance),
         ChangeNotifierProvider(create: (_) => ChatRealtimeService()),
         ChangeNotifierProxyProvider<AuthProvider, CropsProvider>(
           create: (ctx) =>
