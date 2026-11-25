@@ -1,3 +1,4 @@
+import 'package:ai_agri_assistant/core/config/app_config.dart';
 import 'package:ai_agri_assistant/core/layout/app_navigation.dart';
 import 'package:ai_agri_assistant/core/routes/app_router.dart';
 import 'package:ai_agri_assistant/core/routes/app_routes.dart';
@@ -16,6 +17,7 @@ void _setWindow(WidgetTester tester, Size size) {
 Widget _landing({
   bool isSignedIn = false,
   VoidCallback? onLogin,
+  VoidCallback? onDownloadApp,
   ThemeData? theme,
 }) {
   var isBn = false;
@@ -27,6 +29,7 @@ Widget _landing({
         isSignedIn: isSignedIn,
         onToggleLanguage: () => setState(() => isBn = !isBn),
         onLogin: onLogin ?? () {},
+        onDownloadApp: onDownloadApp ?? () {},
         heroBackground: const ColoredBox(color: Colors.green),
       ),
     ),
@@ -95,6 +98,47 @@ void main() {
       await tester.tap(button);
     }
     expect(logins, 3);
+  });
+
+  for (final size in const [Size(390, 844), Size(1280, 800)]) {
+    testWidgets('both download buttons work at ${size.width}', (tester) async {
+      _setWindow(tester, size);
+      var downloads = 0;
+      var logins = 0;
+      await tester.pumpWidget(
+        _landing(onDownloadApp: () => downloads++, onLogin: () => logins++),
+      );
+
+      for (final key in ['landing-hero-download', 'landing-app-download']) {
+        final button = find.byKey(ValueKey(key));
+        await tester.ensureVisible(button);
+        await tester.pumpAndSettle();
+        await tester.tap(button);
+      }
+      expect(downloads, 2);
+      expect(logins, 0);
+    });
+  }
+
+  testWidgets('the app link scrolls to the download section', (tester) async {
+    _setWindow(tester, const Size(1280, 700));
+    await tester.pumpWidget(_landing());
+    final heading = find.text('Get the Android app');
+    final before = tester.getTopLeft(heading).dy;
+
+    await tester.tap(find.byKey(const ValueKey('landing-nav-app')));
+    await tester.pumpAndSettle();
+
+    expect(tester.getTopLeft(heading).dy, lessThan(before));
+    expect(tester.getTopLeft(heading).dy, lessThan(700));
+  });
+
+  test('the download link is a shared Google Drive file', () {
+    final link = Uri.parse(AppConfig.androidApkUrl);
+
+    expect(link.scheme, 'https');
+    expect(link.host, 'drive.google.com');
+    expect(link.pathSegments.take(2), ['file', 'd']);
   });
 
   testWidgets('the features link scrolls to the features', (tester) async {

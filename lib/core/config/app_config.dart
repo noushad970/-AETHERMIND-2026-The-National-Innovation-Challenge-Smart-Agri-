@@ -6,6 +6,11 @@ class AppConfig {
   static const String appVersion = '1.0.0';
   static const String companyName = 'Smart Agri AI';
 
+  /// Where the website sends visitors to download the Android app. The file
+  /// must stay shared with "Anyone with the link".
+  static const String androidApkUrl =
+      'https://drive.google.com/file/d/1_oyBU2PnV_R1Ydgua0XilIRDV3gPSlcm/view?usp=sharing';
+
   // Feature flags
   static const bool enableBanglaVoice = true;
   static const bool enableFirebaseSync = true;

@@ -8,7 +8,7 @@ import '../../../../core/theme/app_theme.dart';
 typedef _Text = (String en, String bn);
 
 /// The website's front page: navigation bar, hero banner, features, steps,
-/// language choice and footer.
+/// Android app download, language choice and footer.
 ///
 /// It only draws what it is given, so it needs no providers.
 class LandingView extends StatefulWidget {
@@ -18,6 +18,7 @@ class LandingView extends StatefulWidget {
     required this.isSignedIn,
     required this.onToggleLanguage,
     required this.onLogin,
+    required this.onDownloadApp,
     required this.heroBackground,
   });
 
@@ -31,6 +32,9 @@ class LandingView extends StatefulWidget {
   final VoidCallback onToggleLanguage;
   final VoidCallback onLogin;
 
+  /// Opens the download page of the Android app.
+  final VoidCallback onDownloadApp;
+
   /// Artwork painted behind the hero banner.
   final Widget heroBackground;
 
@@ -43,6 +47,7 @@ class _LandingViewState extends State<LandingView> {
 
   final GlobalKey _featuresKey = GlobalKey();
   final GlobalKey _stepsKey = GlobalKey();
+  final GlobalKey _appKey = GlobalKey();
 
   static const List<(IconData, _Text, _Text)> _features = [
     (
@@ -167,6 +172,21 @@ class _LandingViewState extends State<LandingView> {
     ),
   ];
 
+  static const List<_Text> _installSteps = [
+    (
+      'Download the APK file from Google Drive.',
+      'গুগল ড্রাইভ থেকে APK ফাইলটি ডাউনলোড করুন।',
+    ),
+    (
+      'Open the file. If your phone asks, allow installing from this source.',
+      'ফাইলটি খুলুন। ফোন জানতে চাইলে এই উৎস থেকে ইনস্টলের অনুমতি দিন।',
+    ),
+    (
+      'Install the app, open it and sign in.',
+      'অ্যাপটি ইনস্টল করে খুলুন এবং লগইন করুন।',
+    ),
+  ];
+
   String _t(_Text text) => widget.isBn ? text.$2 : text.$1;
 
   String get _loginLabel => widget.isSignedIn
@@ -244,6 +264,19 @@ class _LandingViewState extends State<LandingView> {
                         ),
                         child: _stepGrid(context, width),
                       ),
+                      _section(
+                        key: _appKey,
+                        side: side,
+                        title: (
+                          'Get the Android app',
+                          'অ্যান্ড্রয়েড অ্যাপ নিন',
+                        ),
+                        subtitle: (
+                          'Take your farm assistant to the field on your phone.',
+                          'ফোনে করে আপনার কৃষি সহকারী মাঠে নিয়ে যান।',
+                        ),
+                        child: _appDownload(context, width),
+                      ),
                       Padding(
                         padding: EdgeInsets.fromLTRB(side, 48, side, 48),
                         child: _callToAction(width),
@@ -261,7 +294,7 @@ class _LandingViewState extends State<LandingView> {
   }
 
   Widget _navigationBar(double side, double total) {
-    final wide = total >= 900;
+    final wide = total >= 1000;
     final compact = total < 600;
     final linkStyle = TextButton.styleFrom(
       foregroundColor: Colors.white,
@@ -302,6 +335,12 @@ class _LandingViewState extends State<LandingView> {
                   style: linkStyle,
                   onPressed: () => _scrollTo(_stepsKey),
                   child: Text(_t(('How it works', 'যেভাবে কাজ করে'))),
+                ),
+                TextButton(
+                  key: const ValueKey('landing-nav-app'),
+                  style: linkStyle,
+                  onPressed: () => _scrollTo(_appKey),
+                  child: Text(_t(('Get the app', 'অ্যাপ নিন'))),
                 ),
                 const SizedBox(width: 12),
               ],
@@ -466,6 +505,18 @@ class _LandingViewState extends State<LandingView> {
               onPressed: widget.onLogin,
               icon: const Icon(Icons.login_rounded, size: 20),
               label: Text(_loginLabel),
+            ),
+            FilledButton.icon(
+              key: const ValueKey('landing-hero-download'),
+              style: _goldButton(52).copyWith(
+                backgroundColor: const WidgetStatePropertyAll(Colors.white),
+                foregroundColor: const WidgetStatePropertyAll(
+                  AppTheme.primaryGreenDark,
+                ),
+              ),
+              onPressed: widget.onDownloadApp,
+              icon: const Icon(Icons.android, size: 20),
+              label: Text(_t(('Download the app', 'অ্যাপ ডাউনলোড'))),
             ),
             OutlinedButton.icon(
               key: const ValueKey('landing-hero-features'),
@@ -654,13 +705,101 @@ class _LandingViewState extends State<LandingView> {
             radius: 20,
             backgroundColor: AppTheme.primaryGreen,
             foregroundColor: Colors.white,
-            child: Text(widget.isBn ? '১২৩'[index] : '${index + 1}'),
+            child: Text(_number(index)),
           ),
           title,
           body,
         ),
     ], width >= 760 ? 3 : 1);
   }
+
+  Widget _appDownload(BuildContext context, double width) {
+    final theme = Theme.of(context);
+
+    final steps = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        for (final (index, step) in _installSteps.indexed)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 14),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CircleAvatar(
+                  radius: 14,
+                  backgroundColor: AppTheme.primaryGreen,
+                  foregroundColor: Colors.white,
+                  child: Text(
+                    _number(index),
+                    style: const TextStyle(fontSize: 13),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 3),
+                    child: Text(_t(step), style: theme.textTheme.bodyLarge),
+                  ),
+                ),
+              ],
+            ),
+          ),
+      ],
+    );
+
+    final download = Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        CircleAvatar(
+          radius: 40,
+          backgroundColor: AppTheme.primaryGreenLight.withValues(alpha: 0.16),
+          child: Icon(
+            Icons.android,
+            size: 46,
+            color: theme.colorScheme.primary,
+          ),
+        ),
+        const SizedBox(height: 18),
+        FilledButton.icon(
+          key: const ValueKey('landing-app-download'),
+          style: _goldButton(52),
+          onPressed: widget.onDownloadApp,
+          icon: const Icon(Icons.download_rounded, size: 20),
+          label: Text(_t(('Download APK', 'APK ডাউনলোড করুন'))),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          _t(('For Android phones', 'অ্যান্ড্রয়েড ফোনের জন্য')),
+          textAlign: TextAlign.center,
+          style: theme.textTheme.bodySmall,
+        ),
+      ],
+    );
+
+    return Container(
+      padding: EdgeInsets.all(width >= 600 ? 36 : 22),
+      decoration: BoxDecoration(
+        color: theme.cardColor,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: theme.dividerColor),
+      ),
+      child: width >= 760
+          ? Row(
+              children: [
+                Expanded(child: steps),
+                const SizedBox(width: 40),
+                SizedBox(width: 280, child: download),
+              ],
+            )
+          : Column(
+              children: [download, const SizedBox(height: 28), steps],
+            ),
+    );
+  }
+
+  /// The step number, in the digits of the chosen language.
+  String _number(int index) => widget.isBn ? '১২৩'[index] : '${index + 1}';
 
   Widget _callToAction(double width) {
     final text = Column(
