@@ -16,6 +16,7 @@ import 'features/auth/presentation/providers/auth_provider.dart';
 import 'features/crop_tracker/data/crop_summary_provider.dart';
 import 'features/crop_tracker/presentation/providers/crops_provider.dart';
 import 'features/crop_tracker/presentation/providers/daily_suggestions_provider.dart';
+import 'features/ai_disease/presentation/providers/disease_detection_provider.dart';
 import 'core/providers/animation_mode_provider.dart';
 import 'core/providers/locale_provider.dart';
 import 'core/providers/theme_provider.dart';
@@ -131,6 +132,7 @@ class AgriApp extends StatelessWidget {
                 ),
               ),
         ),
+        ChangeNotifierProvider(create: (_) => DiseaseDetectionProvider()),
         ChangeNotifierProvider(create: (_) => WeatherProvider()),
         ChangeNotifierProxyProvider<AuthProvider, WeatherDailyAdviceProvider>(
           create: (ctx) =>
