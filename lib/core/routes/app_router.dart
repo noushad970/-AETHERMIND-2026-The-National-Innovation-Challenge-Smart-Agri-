@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 
+import '../../features/ai_disease/presentation/screens/disease_detect_screen.dart';
+import '../../features/ai_disease/presentation/screens/disease_result_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/crop_tracker/presentation/screens/add_crop_screen.dart';
 
@@ -48,6 +50,12 @@ class AppRouter {
         );
       case AppRoutes.cropLibrary:
         return MaterialPageRoute(builder: (_) => const CropLibraryScreen());
+
+      // AI Disease
+      case AppRoutes.diseaseDetect:
+        return MaterialPageRoute(builder: (_) => const DiseaseDetectScreen());
+      case AppRoutes.diseaseResult:
+        return MaterialPageRoute(builder: (_) => const DiseaseResultScreen());
 
       // Weather
       case AppRoutes.weatherScreen:

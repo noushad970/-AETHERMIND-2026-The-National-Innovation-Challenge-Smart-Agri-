@@ -17,6 +17,7 @@ class BuildPreviewScreen extends StatelessWidget {
     ('cropList', AppRoutes.cropList),
     ('addCrop', AppRoutes.addCrop),
     ('cropLibrary', AppRoutes.cropLibrary),
+    ('diseaseDetect', AppRoutes.diseaseDetect),
     ('weatherScreen', AppRoutes.weatherScreen),
   ];
 
