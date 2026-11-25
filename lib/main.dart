@@ -13,6 +13,7 @@ import 'features/auth/presentation/providers/auth_provider.dart';
 import 'core/providers/animation_mode_provider.dart';
 import 'core/providers/locale_provider.dart';
 import 'core/providers/theme_provider.dart';
+import 'features/weather/presentation/providers/weather_provider.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -92,6 +93,7 @@ class AgriApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AnimationModeProvider()),
 
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => WeatherProvider()),
       ],
       child: Consumer2<LocaleProvider, ThemeProvider>(
 
