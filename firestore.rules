@@ -1,0 +1,118 @@
+rules_version = '2';
+
+// Cloud Firestore rules for the AI Agriculture Assistant for Bangladesh.
+//
+// All user-owned data lives under users/{uid}/<subcollection>. We
+// require that the requesting user is authenticated AND that the
+// document path matches their auth.uid. There is no admin SDK in the
+// app, so we never grant blanket writes.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper: the requesting user must be signed in.
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Helper: the document path's {uid} segment must match the caller.
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    // Top-level user document — only the owner can read/write.
+    match /users/{uid} {
+      allow read, write: if isOwner(uid);
+
+      // Crop tracking lives here.
+      match /crops/{cropId} {
+        allow read, write: if isOwner(uid);
+
+        // Daily AI suggestions for that crop (one per day, keyed by
+        // dateKey) — same per-user rule applies.
+        match /daily_suggestions/{dateKey} {
+          allow read, write: if isOwner(uid);
+        }
+      }
+
+      // Farm records
+      match /expenses/{expenseId} {
+        allow read, write: if isOwner(uid);
+      }
+
+      // Chat history
+      match /chat_threads/{threadId} {
+        allow read, write: if isOwner(uid);
+
+        match /messages/{messageId} {
+          allow read, write: if isOwner(uid);
+        }
+      }
+
+      // Disease scans
+      match /disease_scans/{scanId} {
+        allow read, write: if isOwner(uid);
+      }
+
+      match /livestock/{livestockId} {
+        allow read, write: if isOwner(uid);
+
+        match /livestock_activities/{activityId} {
+          allow read, write: if isOwner(uid);
+        }
+
+        match /livestock_daily_summaries/{dateKey} {
+          allow read, write: if isOwner(uid);
+        }
+
+        match /livestock_daily_suggestions/{dateKey} {
+          allow read, write: if isOwner(uid);
+        }
+      }
+
+      // Market prices scraped per day, keyed by dateKey.
+      match /marketPrices/{dateKey} {
+        allow read, write: if isOwner(uid);
+      }
+    }
+
+    // Community feed (Facebook-style posts). Any signed-in farmer can read the
+    // feed. A user can only create posts / comments as themselves. Anyone
+    // signed in may like or comment on a post, which only changes the like
+    // and comment counters on the post - nothing else.
+    match /posts/{postId} {
+      allow read: if isSignedIn();
+
+      allow create: if isSignedIn()
+        && request.resource.data.authorUid == request.auth.uid
+        && request.resource.data.text is string
+        && request.resource.data.text.size() <= 2000
+        && request.resource.data.get('imageUrl', '') is string
+        && request.resource.data.get('imageUrl', '').size() < 900000
+        && request.resource.data.likeCount == 0
+        && request.resource.data.commentCount == 0;
+
+      allow update: if isSignedIn() && (
+        resource.data.authorUid == request.auth.uid
+        || request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['likedByUids', 'likeCount', 'commentCount'])
+      );
+
+      allow delete: if isSignedIn() && resource.data.authorUid == request.auth.uid;
+
+      match /comments/{commentId} {
+        allow read: if isSignedIn();
+        allow create: if isSignedIn()
+          && request.resource.data.authorUid == request.auth.uid
+          && request.resource.data.text is string
+          && request.resource.data.text.size() <= 1000;
+        allow update, delete: if isSignedIn()
+          && resource.data.authorUid == request.auth.uid;
+      }
+    }
+
+    // No other collections are accessible.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

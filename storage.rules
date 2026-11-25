@@ -1,0 +1,17 @@
+rules_version = '2';
+
+// Firebase Storage rules for Smart Agri.
+// Community post photos live at posts/{uid}/{postId}.jpg. Only the signed-in
+// owner may upload (images under 2 MB); any signed-in user may view them.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /posts/{uid}/{fileName} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null
+        && request.auth.uid == uid
+        && request.resource.size < 2 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+      allow delete: if request.auth != null && request.auth.uid == uid;
+    }
+  }
+}

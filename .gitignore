@@ -121,3 +121,22 @@ app.*.symbols
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 !/dev/ci/**/Gemfile.lock
+
+# Keep the app's dependency lock file under version control
+!pubspec.lock
+
+# Secrets: never commit these (this repository is public)
+.env
+.env.*
+!.env.example
+**/google-services.json
+**/GoogleService-Info.plist
+**/key.properties
+*.jks
+*.keystore
+serviceAccount*.json
+
+# Local scratch
+_to_delete/
+.idea/
+*.iml
