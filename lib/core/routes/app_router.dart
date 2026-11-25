@@ -6,6 +6,7 @@ import '../../features/ai_chatbot/presentation/screens/chatbot_screen.dart';
 import '../../features/ai_disease/presentation/screens/disease_detect_screen.dart';
 import '../../features/ai_disease/presentation/screens/disease_result_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
+import '../../features/auth/presentation/screens/splash_screen.dart';
 import '../../features/community_feed/presentation/screens/community_feed_screen.dart';
 import '../../features/crop_tracker/presentation/screens/add_crop_screen.dart';
 
@@ -35,7 +36,6 @@ import '../../features/settings/presentation/screens/settings_screen.dart';
 import '../../features/smart_irrigation/presentation/screens/soil_irrigation_screen.dart';
 import '../../features/weather/presentation/screens/weather_screen.dart';
 import '../../features/yield_forecaster/presentation/screens/yield_forecaster_screen.dart';
-import '../widgets/build_preview_screen.dart';
 import 'app_routes.dart';
 
 /// Generates [MaterialPageRoute]s for all named routes in [AppRoutes].
@@ -45,7 +45,7 @@ class AppRouter {
   static Route<dynamic>? generate(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutes.splash:
-        return MaterialPageRoute(builder: (_) => const BuildPreviewScreen());
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
       case AppRoutes.onboarding:
         return MaterialPageRoute(builder: (_) => const OnboardingScreen());
       case AppRoutes.appTutorial:
