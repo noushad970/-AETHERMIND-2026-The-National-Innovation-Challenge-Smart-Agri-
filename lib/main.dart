@@ -12,6 +12,7 @@ import 'core/theme/app_theme.dart';
 import 'data/services/crops_realtime_service.dart';
 import 'data/services/crop_daily_suggestion_service.dart';
 import 'data/services/chat_realtime_service.dart';
+import 'data/services/daily_suggestion_update_service.dart';
 import 'data/services/feeding_alarm_service.dart';
 import 'data/services/fish_children_service.dart';
 import 'data/services/fish_realtime_service.dart';
@@ -21,6 +22,7 @@ import 'data/repositories/daily_suggestion_repository.dart';
 import 'data/repositories/fish_daily_suggestion_repository.dart';
 import 'data/repositories/livestock_daily_suggestion_repository.dart';
 import 'data/repositories/livestock_repository.dart';
+import 'data/services/gemini_service.dart';
 import 'data/services/notification_service.dart';
 import 'firebase_options.dart';
 import 'features/auth/presentation/providers/auth_provider.dart';
@@ -240,6 +242,16 @@ class AgriApp extends StatelessWidget {
                 realtime: ctx.read<FishRealtimeService>(),
                 children: ctx.read<FishChildrenService>(),
               ),
+        ),
+        Provider<DailySuggestionUpdateService>(
+          create: (ctx) => DailySuggestionUpdateService(
+            crops: ctx.read<CropsRealtimeService>(),
+            livestock: ctx.read<LivestockRealtimeService>(),
+            cropSuggestions: ctx.read<DailySuggestionsProvider>(),
+            livestockSuggestions: ctx.read<LivestockDailySuggestionsProvider>(),
+            weather: ctx.read<WeatherDailyAdviceProvider>(),
+            gemini: GeminiService(),
+          ),
         ),
       ],
       child: Consumer2<LocaleProvider, ThemeProvider>(
