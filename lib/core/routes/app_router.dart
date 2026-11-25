@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/auth_gate.dart';
 
+import '../../features/ai_chatbot/presentation/screens/chatbot_screen.dart';
 import '../../features/ai_disease/presentation/screens/disease_detect_screen.dart';
 import '../../features/ai_disease/presentation/screens/disease_result_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
@@ -56,6 +58,15 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const DiseaseDetectScreen());
       case AppRoutes.diseaseResult:
         return MaterialPageRoute(builder: (_) => const DiseaseResultScreen());
+
+      // AI Chatbot
+      case AppRoutes.chatbot:
+        return MaterialPageRoute(
+          builder: (_) => const AuthGate(
+            featureName: 'AI chat and saved conversation history',
+            child: ChatbotScreen(),
+          ),
+        );
 
       // Weather
       case AppRoutes.weatherScreen:
