@@ -8,6 +8,7 @@ import 'core/routes/app_routes.dart';
 import 'core/routes/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'firebase_options.dart';
+import 'features/auth/presentation/providers/auth_provider.dart';
 import 'core/providers/animation_mode_provider.dart';
 import 'core/providers/locale_provider.dart';
 import 'core/providers/theme_provider.dart';
@@ -81,6 +82,8 @@ class AgriApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LocaleProvider()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => AnimationModeProvider()),
+
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
       ],
       child: Consumer2<LocaleProvider, ThemeProvider>(
 
