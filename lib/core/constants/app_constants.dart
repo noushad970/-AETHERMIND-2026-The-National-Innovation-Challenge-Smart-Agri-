@@ -1,3 +1,5 @@
+import '../config/env.dart';
+
 /// Numeric and configuration constants.
 class AppConstants {
   AppConstants._();
@@ -45,17 +47,17 @@ class AppConstants {
   static const String geocodingBaseUrl =
       'https://geocoding-api.open-meteo.com/v1';
 
-  // Gemini API key loaded from --dart-define or .env
-  // Run: flutter run --dart-define-from-file=.env
-  static const String geminiApiKey = String.fromEnvironment(
+  // Gemini API key from assets/env/app.env or --dart-define.
+  static String get geminiApiKey => Env.value(
     'GEMINI_API_KEY',
-    defaultValue: '',
+    const String.fromEnvironment('GEMINI_API_KEY'),
   );
 
-  // Gemini model name. Override with --dart-define=GEMINI_MODEL=...
-  static const String geminiModel = String.fromEnvironment(
+  // Gemini model name. Set GEMINI_MODEL to override.
+  static String get geminiModel => Env.value(
     'GEMINI_MODEL',
-    defaultValue: 'gemini-3.5-flash-lite',
+    const String.fromEnvironment('GEMINI_MODEL'),
+    fallback: 'gemini-3.5-flash-lite',
   );
 
   // Disease detection

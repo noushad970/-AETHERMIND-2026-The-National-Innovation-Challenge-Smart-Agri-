@@ -70,7 +70,7 @@ class GeminiService {
   GenerativeModel _ensureModel({String? modelName}) {
     if (!isConfigured) {
       throw const GeminiException(
-        'Gemini API key not configured. Pass --dart-define=GEMINI_API_KEY=... when running.',
+        'Gemini API key not configured. Add GEMINI_API_KEY to assets/env/app.env.',
       );
     }
     final name = modelName ?? _workingModel ?? _modelName;
@@ -112,7 +112,7 @@ class GeminiService {
 
     if (!isConfigured) {
       throw const GeminiException(
-        'Gemini API key not configured. Pass --dart-define=GEMINI_API_KEY=... when running.',
+        'Gemini API key not configured. Add GEMINI_API_KEY to assets/env/app.env.',
       );
     }
     // Enforce 20 requests/day rate limit
@@ -474,7 +474,7 @@ MANDATORY GREETING RULE:
   }) async {
     if (!isConfigured) {
       throw const GeminiException(
-        'Gemini API key not configured. Pass --dart-define=GEMINI_API_KEY=... when running.',
+        'Gemini API key not configured. Add GEMINI_API_KEY to assets/env/app.env.',
       );
     }
 

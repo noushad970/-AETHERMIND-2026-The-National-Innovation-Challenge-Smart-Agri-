@@ -45,17 +45,17 @@ Requires Flutter 3.44 or newer and Android Studio or Xcode.
 
 ```bash
 flutter pub get
-cp .env.example .env      # Windows: copy .env.example .env
-flutter run --dart-define-from-file=.env
+cp .env.example assets/env/app.env   # Windows: copy .env.example assets\env\app.env
+flutter run
 ```
 
-VS Code users can press Run: `.vscode/launch.json` passes `.env` for you.
-In Android Studio, add `--dart-define-from-file=.env` to the run arguments.
+The app reads `assets/env/app.env` when it starts, so the Run button in any IDE
+works too. After changing that file, stop the app and run it again.
 
 Release build:
 
 ```bash
-flutter build apk --release --dart-define-from-file=.env
+flutter build apk --release
 ```
 
 ## Keys you add yourself
@@ -64,14 +64,15 @@ No keys or secrets are stored in this repository.
 
 | What | Where |
 |------|-------|
-| Gemini API key | `GEMINI_API_KEY` in `.env` |
-| Backend URL and secret (optional) | `SERVER_BASE_URL`, `SMART_AGRI_SECRET` in `.env` |
-| Firebase API keys | `FIREBASE_ANDROID_API_KEY`, `FIREBASE_IOS_API_KEY`, `FIREBASE_WEB_API_KEY` in `.env` |
+| Gemini API key | `GEMINI_API_KEY` in `assets/env/app.env` |
+| Backend URL and secret (optional) | `SERVER_BASE_URL`, `SMART_AGRI_SECRET` in `assets/env/app.env` |
+| Firebase API keys | `FIREBASE_ANDROID_API_KEY`, `FIREBASE_IOS_API_KEY`, `FIREBASE_WEB_API_KEY` in `assets/env/app.env` |
 | Firebase Android config | `android/app/google-services.json` |
 | Firebase iOS config | `ios/Runner/GoogleService-Info.plist` |
 | Release signing (optional) | `android/key.properties` and your keystore |
 
-`.env`, the Firebase config files and signing files are ignored by git.
+`assets/env/app.env`, the Firebase config files and signing files are ignored by
+git.
 
 Firebase is required for sign-in, cloud sync and the community feed. In the
 Firebase console enable Email/Password and Google sign-in, Firestore and

@@ -1,3 +1,5 @@
+import 'env.dart';
+
 /// Dedicated Backend Server Configuration for Smart Agri
 /// 
 /// Communicates with the cPanel hosted SmartAgriServer backend
@@ -6,18 +8,17 @@ class ServerConfig {
   ServerConfig._();
 
   /// Base URL of your dedicated Smart Agri backend (see SmartAgriServer/).
-  /// Empty by default. Supply it at build or run time with:
-  /// flutter run --dart-define=SERVER_BASE_URL=https://yourdomain.com/SmartAgriServer/api
-  static const String baseUrl = String.fromEnvironment(
+  /// Empty by default. Set SERVER_BASE_URL in assets/env/app.env.
+  static String get baseUrl => Env.value(
     'SERVER_BASE_URL',
-    defaultValue: '',
+    const String.fromEnvironment('SERVER_BASE_URL'),
   );
 
   /// App Secret Header sent to the backend server to authenticate requests.
   /// Matches config.php on the server.
-  static const String appSecret = String.fromEnvironment(
+  static String get appSecret => Env.value(
     'SMART_AGRI_SECRET',
-    defaultValue: '',
+    const String.fromEnvironment('SMART_AGRI_SECRET'),
   );
 
   /// True when a backend URL was supplied. Without one the app skips the

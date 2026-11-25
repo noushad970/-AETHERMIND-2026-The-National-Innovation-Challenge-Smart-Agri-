@@ -92,6 +92,8 @@ flutter:
     - assets/data/
     - assets/images/
     - assets/audio/
+    # Local settings (API keys). Only the README in this folder is in git.
+    - assets/env/
 
   fonts:
     - family: NotoSansBengali

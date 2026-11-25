@@ -127,7 +127,7 @@ class BackendApiService {
     if (!ServerConfig.isConfigured) {
       throw Exception(
         'AI is not set up yet. Add GEMINI_API_KEY (or SERVER_BASE_URL) '
-        'to your .env file and run the app again.',
+        'to assets/env/app.env and run the app again.',
       );
     }
     final uri = Uri.parse('${ServerConfig.baseUrl}/disease/detect');

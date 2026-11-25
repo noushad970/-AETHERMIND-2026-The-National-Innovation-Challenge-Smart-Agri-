@@ -69,6 +69,8 @@ class NetworkMonitorService extends ChangeNotifier {
 
   /// Verifies active internet reachability
   Future<bool> checkTrueInternetAccess() async {
+    // Browsers cannot do DNS lookups, so rely on the connectivity status.
+    if (kIsWeb) return true;
     try {
       final lookupResult = await InternetAddress.lookup('google.com')
           .timeout(const Duration(seconds: 4));

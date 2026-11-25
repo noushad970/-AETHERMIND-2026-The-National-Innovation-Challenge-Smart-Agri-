@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest_all.dart' as tz_data;
 
+import 'core/config/env.dart';
 import 'core/constants/app_strings.dart';
 import 'core/routes/app_routes.dart';
 import 'core/routes/app_router.dart';
@@ -55,6 +56,9 @@ import 'data/services/offline_sync_manager.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Load API keys and server settings before any service needs them.
+  await Env.load();
 
   // Initialize date formatting locales
   try {

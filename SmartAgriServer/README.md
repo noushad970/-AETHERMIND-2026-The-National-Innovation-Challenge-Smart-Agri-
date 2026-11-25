@@ -19,7 +19,7 @@ This is the dedicated backend server for the **Smart Agri** mobile application. 
    database and AI configuration, then delete or restrict that file.
 
 Point the app at the server with `SERVER_BASE_URL=https://yourdomain.com/SmartAgriServer/api`
-and the same `SMART_AGRI_SECRET` in the app's `.env` file.
+and the same `SMART_AGRI_SECRET` in the app's `assets/env/app.env` file.
 
 ---
 

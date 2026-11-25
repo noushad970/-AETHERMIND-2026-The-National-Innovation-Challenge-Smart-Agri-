@@ -135,6 +135,9 @@ app.*.symbols
 *.jks
 *.keystore
 serviceAccount*.json
+# Local app settings: only the note in this folder is committed
+/assets/env/*
+!/assets/env/README.md
 
 # Local scratch
 _to_delete/
