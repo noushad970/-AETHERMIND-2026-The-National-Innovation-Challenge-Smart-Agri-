@@ -30,6 +30,7 @@ import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
 import '../../features/onboarding/presentation/screens/app_tutorial_screen.dart';
 import '../../features/smart_irrigation/presentation/screens/soil_irrigation_screen.dart';
 import '../../features/weather/presentation/screens/weather_screen.dart';
+import '../../features/yield_forecaster/presentation/screens/yield_forecaster_screen.dart';
 import '../widgets/build_preview_screen.dart';
 import 'app_routes.dart';
 
@@ -133,6 +134,10 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => FishLiveTrackScreen(pondId: pondId),
         );
+
+      // Crop Yield & Revenue Forecaster
+      case AppRoutes.yieldForecaster:
+        return MaterialPageRoute(builder: (_) => const YieldForecasterScreen());
 
       // Smart Irrigation
       case AppRoutes.smartIrrigation:
