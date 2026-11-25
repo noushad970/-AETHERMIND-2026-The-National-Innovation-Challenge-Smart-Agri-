@@ -31,6 +31,7 @@ class BuildPreviewScreen extends StatelessWidget {
     ('addFish', AppRoutes.addFish),
     ('yieldForecaster', AppRoutes.yieldForecaster),
     ('smartIrrigation', AppRoutes.smartIrrigation),
+    ('communityFeed', AppRoutes.communityFeed),
   ];
 
   @override

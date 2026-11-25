@@ -6,6 +6,7 @@ import '../../features/ai_chatbot/presentation/screens/chatbot_screen.dart';
 import '../../features/ai_disease/presentation/screens/disease_detect_screen.dart';
 import '../../features/ai_disease/presentation/screens/disease_result_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
+import '../../features/community_feed/presentation/screens/community_feed_screen.dart';
 import '../../features/crop_tracker/presentation/screens/add_crop_screen.dart';
 
 import '../../features/crop_tracker/presentation/screens/crop_detail_screen.dart';
@@ -142,6 +143,10 @@ class AppRouter {
       // Smart Irrigation
       case AppRoutes.smartIrrigation:
         return MaterialPageRoute(builder: (_) => const SoilIrrigationScreen());
+
+      // Community Agri Feed
+      case AppRoutes.communityFeed:
+        return MaterialPageRoute(builder: (_) => const CommunityFeedScreen());
       default:
         return _unknownRoute(settings.name);
     }
