@@ -7,9 +7,12 @@ import 'core/constants/app_strings.dart';
 import 'core/routes/app_routes.dart';
 import 'core/routes/app_router.dart';
 import 'core/theme/app_theme.dart';
+import 'data/services/crops_realtime_service.dart';
 import 'data/services/notification_service.dart';
 import 'firebase_options.dart';
 import 'features/auth/presentation/providers/auth_provider.dart';
+import 'features/crop_tracker/data/crop_summary_provider.dart';
+import 'features/crop_tracker/presentation/providers/crops_provider.dart';
 import 'core/providers/animation_mode_provider.dart';
 import 'core/providers/locale_provider.dart';
 import 'core/providers/theme_provider.dart';
@@ -94,6 +97,20 @@ class AgriApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AnimationModeProvider()),
 
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => CropsRealtimeService()),
+        ChangeNotifierProxyProvider<AuthProvider, CropsProvider>(
+          create: (ctx) =>
+              CropsProvider(realtime: ctx.read<CropsRealtimeService>()),
+          update: (ctx, _, prev) =>
+              prev ?? CropsProvider(realtime: ctx.read<CropsRealtimeService>()),
+        ),
+        ChangeNotifierProxyProvider<AuthProvider, CropSummaryProvider>(
+          create: (ctx) =>
+              CropSummaryProvider(realtime: ctx.read<CropsRealtimeService>()),
+          update: (ctx, _, prev) =>
+              prev ??
+              CropSummaryProvider(realtime: ctx.read<CropsRealtimeService>()),
+        ),
         ChangeNotifierProvider(create: (_) => WeatherProvider()),
         ChangeNotifierProxyProvider<AuthProvider, WeatherDailyAdviceProvider>(
           create: (ctx) =>
