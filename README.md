@@ -49,6 +49,9 @@ cp .env.example .env      # Windows: copy .env.example .env
 flutter run --dart-define-from-file=.env
 ```
 
+VS Code users can press Run: `.vscode/launch.json` passes `.env` for you.
+In Android Studio, add `--dart-define-from-file=.env` to the run arguments.
+
 Release build:
 
 ```bash
@@ -63,17 +66,12 @@ No keys or secrets are stored in this repository.
 |------|-------|
 | Gemini API key | `GEMINI_API_KEY` in `.env` |
 | Backend URL and secret (optional) | `SERVER_BASE_URL`, `SMART_AGRI_SECRET` in `.env` |
-| Firebase API keys | `lib/firebase_options.dart`, or run `flutterfire configure` |
+| Firebase API keys | `FIREBASE_ANDROID_API_KEY`, `FIREBASE_IOS_API_KEY`, `FIREBASE_WEB_API_KEY` in `.env` |
 | Firebase Android config | `android/app/google-services.json` |
 | Firebase iOS config | `ios/Runner/GoogleService-Info.plist` |
 | Release signing (optional) | `android/key.properties` and your keystore |
 
 `.env`, the Firebase config files and signing files are ignored by git.
-`lib/firebase_options.dart` is tracked, so **do not commit your real keys in it**:
-
-```bash
-git update-index --skip-worktree lib/firebase_options.dart
-```
 
 Firebase is required for sign-in, cloud sync and the community feed. In the
 Firebase console enable Email/Password and Google sign-in, Firestore and

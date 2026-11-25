@@ -1,6 +1,6 @@
-// Firebase options. The API keys are intentionally empty in this repository.
-// Either paste your keys below on your own machine, or regenerate this file
-// with `flutterfire configure --project=<your-firebase-project-id>`.
+// Firebase options. API keys are not stored in this repository: they are read
+// from your local .env file at build time.
+// Run with: flutter run --dart-define-from-file=.env
 // Do not commit real keys to a public repository.
 
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
@@ -32,7 +32,7 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: '',
+    apiKey: String.fromEnvironment('FIREBASE_ANDROID_API_KEY'),
     appId: '1:31213059991:android:7340e7a9d2114d631b4ed2',
     messagingSenderId: '31213059991',
     projectId: 'smartagri-17066',
@@ -40,7 +40,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: '',
+    apiKey: String.fromEnvironment('FIREBASE_IOS_API_KEY'),
     appId: '1:31213059991:ios:7340e7a9d2114d631b4ed2',
     messagingSenderId: '31213059991',
     projectId: 'smartagri-17066',
@@ -49,7 +49,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: '',
+    apiKey: String.fromEnvironment('FIREBASE_WEB_API_KEY'),
     appId: '1:31213059991:web:7340e7a9d2114d631b4ed2',
     messagingSenderId: '31213059991',
     projectId: 'smartagri-17066',
