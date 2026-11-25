@@ -42,6 +42,7 @@ import 'core/providers/theme_provider.dart';
 import 'features/weather/presentation/providers/weather_daily_advice_provider.dart';
 import 'features/weather/presentation/providers/weather_provider.dart';
 import 'features/notifications/presentation/providers/notification_provider.dart';
+import 'features/farm_records/presentation/providers/expenses_provider.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -180,6 +181,7 @@ class AgriApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(create: (_) => MarketPricesProvider()..load()),
         ChangeNotifierProvider(create: (_) => NotificationProvider()..loadLocalNotifications()),
+        ChangeNotifierProvider(create: (_) => ExpensesProvider()..load()),
 
         ChangeNotifierProxyProvider<
           AuthProvider,
