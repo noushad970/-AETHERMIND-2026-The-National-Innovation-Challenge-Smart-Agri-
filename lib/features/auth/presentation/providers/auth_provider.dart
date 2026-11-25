@@ -365,6 +365,14 @@ class AuthProvider extends ChangeNotifier {
         return 'This user account has been disabled. (একাউন্টটি নিষ্ক্রিয় করা হয়েছে)';
       case 'too-many-requests':
         return 'Too many attempts. Please try again later. (অতিরিক্ত চেষ্টার কারণে সাময়িক বন্ধ, কিছুক্ষণ পর আবার চেষ্টা করুন)';
+      case 'popup-blocked':
+        return 'Your browser blocked the Google window. Allow pop-ups for this site and try again. (ব্রাউজার গুগল উইন্ডো আটকে দিয়েছে। পপ-আপ চালু করে আবার চেষ্টা করুন)';
+      case 'operation-not-allowed':
+        return 'This sign-in method is turned off. Enable it in Firebase Console > Authentication > Sign-in method. (এই লগইন পদ্ধতি বন্ধ আছে)';
+      case 'unauthorized-domain':
+        return 'This web address is not allowed to sign in. Add it in Firebase Console > Authentication > Settings > Authorized domains. (এই ওয়েব ঠিকানা থেকে লগইনের অনুমতি নেই)';
+      case 'account-exists-with-different-credential':
+        return 'This email already has an account. Sign in with email and password. (এই ইমেইলে আগে থেকেই অ্যাকাউন্ট আছে, ইমেইল ও পাসওয়ার্ড দিয়ে লগইন করুন)';
       default:
         return e.message ?? 'Authentication error occurred.';
     }
