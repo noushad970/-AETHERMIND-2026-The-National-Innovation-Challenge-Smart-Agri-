@@ -14,7 +14,9 @@ import '../../features/crop_tracker/presentation/screens/crop_list_screen.dart';
 
 import '../../features/crop_tracker/presentation/screens/crop_live_track_screen.dart';
 import '../../features/livestock/presentation/screens/add_livestock_screen.dart';
+import '../../features/livestock/presentation/screens/livestock_detail_screen.dart';
 import '../../features/livestock/presentation/screens/livestock_list_screen.dart';
+import '../../features/livestock/presentation/screens/livestock_live_track_screen.dart';
 import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
 import '../../features/onboarding/presentation/screens/app_tutorial_screen.dart';
 import '../../features/weather/presentation/screens/weather_screen.dart';
@@ -79,6 +81,16 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const LivestockListScreen());
       case AppRoutes.addLivestock:
         return MaterialPageRoute(builder: (_) => const AddLivestockScreen());
+      case AppRoutes.livestockDetail:
+        final animalId = settings.arguments as String;
+        return MaterialPageRoute(
+          builder: (_) => LivestockDetailScreen(animalId: animalId),
+        );
+      case AppRoutes.livestockLiveTrack:
+        final animalId = settings.arguments as String;
+        return MaterialPageRoute(
+          builder: (_) => LivestockLiveTrackScreen(animalId: animalId),
+        );
       default:
         return _unknownRoute(settings.name);
     }
