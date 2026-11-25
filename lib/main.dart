@@ -10,6 +10,8 @@ import 'core/theme/app_theme.dart';
 import 'data/services/crops_realtime_service.dart';
 import 'data/services/crop_daily_suggestion_service.dart';
 import 'data/services/chat_realtime_service.dart';
+import 'data/services/livestock_children_service.dart';
+import 'data/services/livestock_realtime_service.dart';
 import 'data/repositories/daily_suggestion_repository.dart';
 import 'data/services/notification_service.dart';
 import 'firebase_options.dart';
@@ -104,7 +106,9 @@ class AgriApp extends StatelessWidget {
 
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => CropsRealtimeService()),
+        ChangeNotifierProvider(create: (_) => LivestockRealtimeService()),
         ChangeNotifierProvider(create: (_) => CropDailySuggestionService()),
+        ChangeNotifierProvider(create: (_) => LivestockChildrenService()),
         ChangeNotifierProvider(create: (_) => ChatRealtimeService()),
         ChangeNotifierProxyProvider<AuthProvider, CropsProvider>(
           create: (ctx) =>
