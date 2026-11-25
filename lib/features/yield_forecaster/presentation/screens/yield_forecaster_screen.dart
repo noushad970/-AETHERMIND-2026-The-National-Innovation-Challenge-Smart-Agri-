@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_strings.dart';
+import '../../../../core/layout/adaptive_two_pane.dart';
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/widgets/header_action_bar.dart';
@@ -135,11 +136,10 @@ class _YieldForecasterScreenState extends State<YieldForecasterScreen> {
           SizedBox(width: 8),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+      body: AdaptiveTwoPane(
+        lazy: false,
+        secondaryOnLeft: true,
+        top: [
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -187,10 +187,12 @@ class _YieldForecasterScreenState extends State<YieldForecasterScreen> {
               ),
             ),
             const SizedBox(height: 20),
-
+        ],
+        primary: [
             _ForecastResultCard(result: result, landArea: landArea),
             const SizedBox(height: 20),
-
+        ],
+        secondary: [
             Text(
               context.tr(
                 AppStrings.selectCropPreset,
@@ -381,11 +383,11 @@ class _YieldForecasterScreenState extends State<YieldForecasterScreen> {
               ),
             ),
             const SizedBox(height: 24),
-
+        ],
+        bottom: [
             _FinancialBreakdownTable(result: result, landArea: landArea),
             const SizedBox(height: 32),
-          ],
-        ),
+        ],
       ),
     );
   }

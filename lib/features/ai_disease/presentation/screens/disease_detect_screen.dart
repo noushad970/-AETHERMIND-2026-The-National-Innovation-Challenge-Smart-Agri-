@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/constants/app_strings.dart';
+import '../../../../core/layout/adaptive_two_pane.dart';
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/theme/app_theme.dart';
@@ -142,9 +143,8 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
 
             return Stack(
               children: [
-                ListView(
-                  padding: const EdgeInsets.all(16),
-                  children: [
+                AdaptiveTwoPane(
+                  primary: [
                     // Daily limit status card
                     _DailyQuotaCard(
                       remaining: prov.remainingScans,
@@ -209,7 +209,8 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
                       ),
 
                     const SizedBox(height: 24),
-
+                  ],
+                  secondary: [
                     // Past scan reports from Hive local storage
                     if (prov.history.isNotEmpty) ...[
                       Row(

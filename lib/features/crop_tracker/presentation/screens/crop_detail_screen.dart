@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/constants/app_strings.dart';
+import '../../../../core/layout/adaptive_two_pane.dart';
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/theme/app_theme.dart';
@@ -126,9 +127,8 @@ class _Body extends StatelessWidget {
       ),
       body: RefreshIndicator(
         onRefresh: () => context.read<CropsProvider>().refreshFromCloud(),
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
+        child: AdaptiveTwoPane(
+          primary: [
             _OverviewCard(crop: crop, stage: stage, remaining: remaining),
             const SizedBox(height: 16),
             _AiSuggestionCard(crop: crop),
@@ -139,6 +139,8 @@ class _Body extends StatelessWidget {
               _OrchardCard(crop: crop),
             ],
             const SizedBox(height: 16),
+          ],
+          secondary: [
             Text(
               context.tr(AppStrings.activityTimeline, AppStrings.activityTimelineBn),
               style: Theme.of(context).textTheme.titleMedium,

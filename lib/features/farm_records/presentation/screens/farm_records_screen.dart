@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/constants/app_strings.dart';
+import '../../../../core/layout/adaptive_two_pane.dart';
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/theme/app_theme.dart';
@@ -44,11 +45,12 @@ class FarmRecordsScreen extends StatelessWidget {
           featureName: context.tr('farm records', 'খামার হিসাব'),
           child: Consumer<ExpensesProvider>(
             builder: (context, prov, _) {
-              return ListView(
-                padding: const EdgeInsets.all(16),
-                children: [
+              return AdaptiveTwoPane(
+                primary: [
                   _SummaryCard(total: prov.total, monthly: prov.monthlyTotal),
                   const SizedBox(height: 16),
+                ],
+                secondary: [
                   _CategoryCard(categories: prov.totalsByCategory),
                   const SizedBox(height: 16),
                   Card(

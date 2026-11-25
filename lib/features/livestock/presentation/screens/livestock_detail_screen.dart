@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/constants/app_strings.dart';
+import '../../../../core/layout/adaptive_two_pane.dart';
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/theme/app_theme.dart';
@@ -169,15 +170,16 @@ class _DetailScaffoldState extends State<_DetailScaffold> {
         builder: (context, prov, _) {
           // Re-read to pick up activity toggles / death records.
           final live = prov.byId(animal.id) ?? animal;
-          return ListView(
-            padding: const EdgeInsets.all(16),
-            children: [
+          return AdaptiveTwoPane(
+            primary: [
               _OverviewCard(animal: live),
               const SizedBox(height: 12),
               _DailyActionsCard(animal: live),
               const SizedBox(height: 12),
               _TodayChecklistCard(animal: live),
               const SizedBox(height: 12),
+            ],
+            secondary: [
               _AiAdviceCard(animal: live, repo: _repo),
               const SizedBox(height: 12),
               _RecentDeathsCard(animal: live, repo: _repo),

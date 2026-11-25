@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../core/layout/adaptive_two_pane.dart';
 import '../../../../core/providers/animation_mode_provider.dart';
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../core/providers/theme_provider.dart';
@@ -41,9 +42,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
       body: AgriAtmosphericBackground(
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
+        child: AdaptiveTwoPane(
+          primary: [
             // User Profile & Status Card
             _ProfileHeaderCard(
               userIdentifier: userIdentifier,
@@ -66,6 +66,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             const SizedBox(height: 16),
 
+          ],
+          secondary: [
             // Section 3: Language & Theme
             _AppearanceAndLanguageCard(
               themeProv: themeProv,

@@ -36,10 +36,12 @@ class DesktopPageStyle {
       case AppRoutes.addExpense:
         return form;
       case AppRoutes.chatbot:
-      case AppRoutes.settings:
       case AppRoutes.communityFeed:
       case AppRoutes.notifications:
       case AppRoutes.expenseList:
+      case AppRoutes.cropLiveTrack:
+      case AppRoutes.livestockLiveTrack:
+      case AppRoutes.fishLiveTrack:
         return reading;
       default:
         return wide;

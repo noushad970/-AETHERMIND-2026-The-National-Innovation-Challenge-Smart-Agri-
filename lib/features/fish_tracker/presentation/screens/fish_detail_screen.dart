@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../core/layout/adaptive_two_pane.dart';
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/theme/app_theme.dart';
@@ -44,9 +45,8 @@ class FishDetailScreen extends StatelessWidget {
           ],
         ),
         body: AgriAtmosphericBackground(
-          child: ListView(
-            padding: const EdgeInsets.all(16),
-            children: [
+          child: AdaptiveTwoPane(
+            primary: [
               // Species Profile Card
               Container(
                 padding: const EdgeInsets.all(18),
@@ -176,6 +176,8 @@ class FishDetailScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
+            ],
+            secondary: [
               // Feeding & Oxygen Advice Card
               Container(
                 padding: const EdgeInsets.all(18),

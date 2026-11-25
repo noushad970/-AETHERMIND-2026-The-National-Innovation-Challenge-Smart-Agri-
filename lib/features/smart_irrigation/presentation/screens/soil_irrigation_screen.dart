@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_strings.dart';
+import '../../../../core/layout/adaptive_two_pane.dart';
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/widgets/agri_atmospheric_background.dart';
@@ -120,11 +121,10 @@ class _SoilIrrigationScreenState extends State<SoilIrrigationScreen> {
         ],
       ),
       body: AgriAtmosphericBackground(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+        child: AdaptiveTwoPane(
+          lazy: false,
+          secondaryOnLeft: true,
+          top: [
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -172,10 +172,12 @@ class _SoilIrrigationScreenState extends State<SoilIrrigationScreen> {
               ),
             ),
             const SizedBox(height: 20),
-
+          ],
+          primary: [
             _IrrigationAdvisoryCard(result: result, landArea: landArea),
             const SizedBox(height: 20),
-
+          ],
+          secondary: [
             Text(
               context.tr(
                 AppStrings.selectSoilType,
@@ -328,7 +330,6 @@ class _SoilIrrigationScreenState extends State<SoilIrrigationScreen> {
             const SizedBox(height: 32),
           ],
         ),
-      ),
       ),
     );
   }

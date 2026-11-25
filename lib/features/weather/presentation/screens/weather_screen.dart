@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/constants/app_strings.dart';
+import '../../../../core/layout/adaptive_two_pane.dart';
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/widgets/agri_atmospheric_background.dart';
@@ -146,9 +147,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
               isRainy: isRainy,
               child: RefreshIndicator(
                 onRefresh: () => prov.loadCurrentLocation(),
-                child: ListView(
-                  padding: const EdgeInsets.all(16),
-                  children: [
+                child: AdaptiveTwoPane(
+                  primary: [
                     _CurrentWeatherHeroCard(w: w),
                     const SizedBox(height: 12),
                     _LocationActionsCard(
@@ -160,6 +160,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                     const SizedBox(height: 12),
                     _AiWeatherTipCard(weather: w),
                     const SizedBox(height: 16),
+                  ],
+                  secondary: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

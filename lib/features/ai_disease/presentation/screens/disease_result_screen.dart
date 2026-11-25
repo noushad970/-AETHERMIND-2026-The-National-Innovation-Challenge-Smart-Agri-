@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../core/layout/adaptive_two_pane.dart';
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/widgets/header_action_bar.dart';
@@ -102,9 +103,8 @@ class _DiseaseResultScreenState extends State<DiseaseResultScreen> {
             final treatmentSummary = treatmentSteps.isNotEmpty ? 'চিকিৎসা ধাপসমূহ: ${treatmentSteps.join('. ')}' : '';
             final ttsText = '$diseaseTitle। $treatmentSummary';
 
-            return ListView(
-              padding: const EdgeInsets.all(16),
-              children: [
+            return AdaptiveTwoPane(
+              primary: [
                 // Language Switcher Banner (English / বাংলা)
                 _LanguageToggleBar(
                   isBangla: _showBangla,
@@ -142,6 +142,8 @@ class _DiseaseResultScreenState extends State<DiseaseResultScreen> {
                     stepColor: Colors.blue.shade700,
                   ),
 
+              ],
+              secondary: [
                 // Sequential Treatment Steps (Most critical for farmers)
                 if (treatmentSteps.isNotEmpty)
                   _SequentialStepsCard(
