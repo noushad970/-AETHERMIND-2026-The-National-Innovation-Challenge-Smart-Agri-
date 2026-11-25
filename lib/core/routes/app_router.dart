@@ -13,6 +13,8 @@ import '../../features/crop_tracker/presentation/screens/crop_library_screen.dar
 import '../../features/crop_tracker/presentation/screens/crop_list_screen.dart';
 
 import '../../features/crop_tracker/presentation/screens/crop_live_track_screen.dart';
+import '../../features/livestock/presentation/screens/add_livestock_screen.dart';
+import '../../features/livestock/presentation/screens/livestock_list_screen.dart';
 import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
 import '../../features/onboarding/presentation/screens/app_tutorial_screen.dart';
 import '../../features/weather/presentation/screens/weather_screen.dart';
@@ -71,6 +73,12 @@ class AppRouter {
       // Weather
       case AppRoutes.weatherScreen:
         return MaterialPageRoute(builder: (_) => const WeatherScreen());
+
+      // Livestock / poultry
+      case AppRoutes.livestockList:
+        return MaterialPageRoute(builder: (_) => const LivestockListScreen());
+      case AppRoutes.addLivestock:
+        return MaterialPageRoute(builder: (_) => const AddLivestockScreen());
       default:
         return _unknownRoute(settings.name);
     }
